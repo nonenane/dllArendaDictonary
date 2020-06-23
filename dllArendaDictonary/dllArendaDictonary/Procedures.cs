@@ -360,6 +360,111 @@ namespace dllArendaDictonary
             return dtResult;
         }
 
+        public async Task<DataTable> getFloors(bool withAllDeps = false)
+        {
+            ap.Clear();
+
+            DataTable dtResult = executeProcedure("[Arenda].[spg_getFloors]",
+                 new string[0] { },
+                 new DbType[0] { }, ap);
+
+            if (withAllDeps)
+            {
+                if (dtResult != null)
+                {
+                    if (!dtResult.Columns.Contains("isMain"))
+                    {
+                        DataColumn col = new DataColumn("isMain", typeof(int));
+                        col.DefaultValue = 1;
+                        dtResult.Columns.Add(col);
+                        dtResult.AcceptChanges();
+                    }
+
+                    DataRow row = dtResult.NewRow();
+
+                    row["cName"] = "Все Этажи";
+                    row["id"] = 0;
+                    row["isMain"] = 0;
+                    dtResult.Rows.Add(row);
+                    dtResult.AcceptChanges();
+                    dtResult.DefaultView.Sort = "isMain asc, cName asc";
+                    dtResult = dtResult.DefaultView.ToTable().Copy();
+                }
+            }
+
+            return dtResult;
+        }
+
+        public async Task<DataTable> getObjectDiscount(bool withAllDeps = false)
+        {
+            ap.Clear();
+
+            DataTable dtResult = executeProcedure("[Arenda].[spg_getObjectDiscount]",
+                 new string[0] { },
+                 new DbType[0] { }, ap);
+
+            if (withAllDeps)
+            {
+                if (dtResult != null)
+                {
+                    if (!dtResult.Columns.Contains("isMain"))
+                    {
+                        DataColumn col = new DataColumn("isMain", typeof(int));
+                        col.DefaultValue = 1;
+                        dtResult.Columns.Add(col);
+                        dtResult.AcceptChanges();
+                    }
+
+                    DataRow row = dtResult.NewRow();
+
+                    row["cName"] = "Все Объекты";
+                    row["id"] = 0;
+                    row["isMain"] = 0;
+                    dtResult.Rows.Add(row);
+                    dtResult.AcceptChanges();
+                    dtResult.DefaultView.Sort = "isMain asc, cName asc";
+                    dtResult = dtResult.DefaultView.ToTable().Copy();
+                }
+            }
+
+            return dtResult;
+        }
+
+        public async Task<DataTable> getSections(bool withAllDeps = false)
+        {
+            ap.Clear();
+
+            DataTable dtResult = executeProcedure("[Arenda].[spg_getSections]",
+                 new string[0] { },
+                 new DbType[0] { }, ap);
+
+            if (withAllDeps)
+            {
+                if (dtResult != null)
+                {
+                    if (!dtResult.Columns.Contains("isMain"))
+                    {
+                        DataColumn col = new DataColumn("isMain", typeof(int));
+                        col.DefaultValue = 1;
+                        dtResult.Columns.Add(col);
+                        dtResult.AcceptChanges();
+                    }
+
+                    DataRow row = dtResult.NewRow();
+
+                    row["cName"] = "Все Секции";
+                    row["id"] = 0;
+                    row["isMain"] = 0;
+                    dtResult.Rows.Add(row);
+                    dtResult.AcceptChanges();
+                    dtResult.DefaultView.Sort = "isMain asc, cName asc";
+                    dtResult = dtResult.DefaultView.ToTable().Copy();
+                }
+            }
+
+            return dtResult;
+        }
+
         public async Task<DataTable> setTDiscount(int id, DateTime dateStart, DateTime? dateEnd,int id_typeDiscount,int id_TypeTenant,int id_TypeAgreements,int id_StatusDiscount, bool isActive, bool isDel, int result)
         {
             ap.Clear();
@@ -379,6 +484,87 @@ namespace dllArendaDictonary
             DataTable dtResult = executeProcedure("[Arenda].[spg_setTDiscount]",
                  new string[11] { "@id", "@dateStart", "@dateEnd", "@id_typeDiscount", "@id_TypeTenant", "@id_TypeAgreements", "@id_StatusDiscount", "@isActive", "@id_user", "@result", "@isDel" },
                  new DbType[11] { DbType.Int32, DbType.Date,DbType.Date,DbType.Int32,DbType.Int32,DbType.Int32,DbType.Int32, DbType.Boolean, DbType.Int32, DbType.Int32, DbType.Boolean }, ap);
+
+            return dtResult;
+        }
+
+        public async Task<DataTable> setDiscountValue(int id, int id_tDiscount, decimal? PercentDiscount, decimal? DiscountPrice, decimal? Price, decimal? TotalPrice, bool isActive, bool isDel, int result)
+        {
+            ap.Clear();
+            ap.Add(id);
+            ap.Add(id_tDiscount);
+            ap.Add(PercentDiscount);
+            ap.Add(DiscountPrice);
+            ap.Add(Price);
+            ap.Add(TotalPrice);
+            ap.Add(isActive);
+            ap.Add(UserSettings.User.Id);
+            ap.Add(result);
+            ap.Add(isDel);
+
+            DataTable dtResult = executeProcedure("[Arenda].[spg_setDiscountValue]",
+                 new string[10] { "@id", "@id_tDiscount", "@PercentDiscount", "@DiscountPrice", "@Price", "@TotalPrice", "@isActive", "@id_user", "@result", "@isDel" },
+                 new DbType[10] { DbType.Int32, DbType.Int32, DbType.Decimal, DbType.Decimal, DbType.Decimal, DbType.Decimal, DbType.Boolean, DbType.Int32, DbType.Int32, DbType.Boolean }, ap);
+
+            return dtResult;
+        }
+
+        public async Task<DataTable> setDiscountObject(int id, int id_tDiscount, int? id_ObjectLease, int? id_Buildings,int? id_Floor,int? id_Sections,int? id_LandPlot,int? id_ReclamaPlace,bool isException, bool isActive, bool isDel, int result)
+        {
+            ap.Clear();
+            ap.Add(id);
+            ap.Add(id_tDiscount);
+            ap.Add(id_ObjectLease);
+            ap.Add(id_Buildings);
+            ap.Add(id_Floor);
+            ap.Add(id_Sections);
+            ap.Add(id_LandPlot);
+            ap.Add(id_ReclamaPlace);
+            ap.Add(isException);
+            ap.Add(isActive);
+            ap.Add(UserSettings.User.Id);
+            ap.Add(result);
+            ap.Add(isDel);
+
+            DataTable dtResult = executeProcedure("[Arenda].[spg_setDiscountObject]",
+                 new string[13] { "@id", "@id_tDiscount", "@id_ObjectLease", "@id_Buildings", "@id_Floor", "@id_Sections", "@id_LandPlot", "@id_ReclamaPlace","@isException", "@isActive", "@id_user", "@result", "@isDel" },
+                 new DbType[13] { DbType.Int32, DbType.Int32, DbType.Int32, DbType.Int32, DbType.Int32, DbType.Int32, DbType.Int32, DbType.Int32, DbType.Boolean, DbType.Boolean, DbType.Int32, DbType.Int32, DbType.Boolean }, ap);
+
+            return dtResult;
+        }
+
+
+        public async Task<DataTable> getTDiscount()
+        {
+            ap.Clear();
+
+            DataTable dtResult = executeProcedure("[Arenda].[spg_getTDiscount]",
+                 new string[0] { },
+                 new DbType[0] { }, ap);
+
+            return dtResult;
+        }
+
+        public async Task<DataTable> getDiscountValue(int id_tDiscount)
+        {
+            ap.Clear();
+            ap.Add(id_tDiscount);
+
+            DataTable dtResult = executeProcedure("[Arenda].[spg_getDiscountValue]",
+                 new string[1] { "@id_tDiscount" },
+                 new DbType[1] {DbType.Int32 }, ap);
+
+            return dtResult;
+        }
+
+        public async Task<DataTable> getDiscountObject(int id_tDiscount)
+        {
+            ap.Clear();
+            ap.Add(id_tDiscount);
+
+            DataTable dtResult = executeProcedure("[Arenda].[spg_getDiscountObject]",
+                 new string[1] { "@id_tDiscount" },
+                 new DbType[1] { DbType.Int32 }, ap);
 
             return dtResult;
         }

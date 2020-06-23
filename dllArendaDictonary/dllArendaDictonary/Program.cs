@@ -27,7 +27,7 @@ namespace dllArendaDictonary
                     Logging.Comment("Вход в программу");
                     Logging.StopFirstLevel();
 
-                    Application.Run(new dllArendaDictonary.jDiscount.frmAdd());
+                    Application.Run(new dllArendaDictonary.jDiscount.frmList());
                     //Application.Run(new ArchiveDocAddDoc.frmAddDoc(){Text = "Добавление документа"});
                     //Application.Run(new FeedBack.frmList());
                     //Application.Run(new WebSites.frmList());

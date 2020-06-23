@@ -33,8 +33,8 @@
             this.lTypeDiscont = new System.Windows.Forms.Label();
             this.cmbTypeDicount = new System.Windows.Forms.ComboBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.rbTime = new System.Windows.Forms.RadioButton();
             this.rbStab = new System.Windows.Forms.RadioButton();
+            this.rbTime = new System.Windows.Forms.RadioButton();
             this.dtpStart = new System.Windows.Forms.DateTimePicker();
             this.dtpEnd = new System.Windows.Forms.DateTimePicker();
             this.lStart = new System.Windows.Forms.Label();
@@ -43,6 +43,25 @@
             this.cmbTypeTenant = new System.Windows.Forms.ComboBox();
             this.lTypeAgreements = new System.Windows.Forms.Label();
             this.cmbTypeAgreements = new System.Windows.Forms.ComboBox();
+            this.lPercentDiscount = new System.Windows.Forms.Label();
+            this.tbPercentDiscount = new System.Windows.Forms.TextBox();
+            this.lDiscountPrice = new System.Windows.Forms.Label();
+            this.tbDiscountPrice = new System.Windows.Forms.TextBox();
+            this.lPrice = new System.Windows.Forms.Label();
+            this.tbPrice = new System.Windows.Forms.TextBox();
+            this.lTotalPrice = new System.Windows.Forms.Label();
+            this.tbTotalPrice = new System.Windows.Forms.TextBox();
+            this.cmbBuilding = new System.Windows.Forms.ComboBox();
+            this.cmbObject = new System.Windows.Forms.ComboBox();
+            this.lObject = new System.Windows.Forms.Label();
+            this.lBuilding = new System.Windows.Forms.Label();
+            this.lFloor = new System.Windows.Forms.Label();
+            this.cmbFloor = new System.Windows.Forms.ComboBox();
+            this.lObjectDiscount = new System.Windows.Forms.Label();
+            this.cmbObjectDiscount = new System.Windows.Forms.ComboBox();
+            this.chbIsException = new System.Windows.Forms.CheckBox();
+            this.lComby = new System.Windows.Forms.Label();
+            this.cmbComby = new System.Windows.Forms.ComboBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -50,7 +69,7 @@
             // 
             this.btSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btSave.Image = global::dllArendaDictonary.Properties.Resources.Save;
-            this.btSave.Location = new System.Drawing.Point(456, 435);
+            this.btSave.Location = new System.Drawing.Point(468, 390);
             this.btSave.Name = "btSave";
             this.btSave.Size = new System.Drawing.Size(32, 32);
             this.btSave.TabIndex = 2;
@@ -61,7 +80,7 @@
             // 
             this.btClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btClose.Image = global::dllArendaDictonary.Properties.Resources.Exit;
-            this.btClose.Location = new System.Drawing.Point(494, 435);
+            this.btClose.Location = new System.Drawing.Point(506, 390);
             this.btClose.Name = "btClose";
             this.btClose.Size = new System.Drawing.Size(32, 32);
             this.btClose.TabIndex = 3;
@@ -97,6 +116,17 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Временной тип скидки";
             // 
+            // rbStab
+            // 
+            this.rbStab.AutoSize = true;
+            this.rbStab.Location = new System.Drawing.Point(136, 19);
+            this.rbStab.Name = "rbStab";
+            this.rbStab.Size = new System.Drawing.Size(125, 17);
+            this.rbStab.TabIndex = 9;
+            this.rbStab.Text = "Постоянная скидка";
+            this.rbStab.UseVisualStyleBackColor = true;
+            this.rbStab.Click += new System.EventHandler(this.rbTime_Click);
+            // 
             // rbTime
             // 
             this.rbTime.AutoSize = true;
@@ -109,17 +139,6 @@
             this.rbTime.Text = "Временная скидка";
             this.rbTime.UseVisualStyleBackColor = true;
             this.rbTime.Click += new System.EventHandler(this.rbTime_Click);
-            // 
-            // rbStab
-            // 
-            this.rbStab.AutoSize = true;
-            this.rbStab.Location = new System.Drawing.Point(136, 19);
-            this.rbStab.Name = "rbStab";
-            this.rbStab.Size = new System.Drawing.Size(125, 17);
-            this.rbStab.TabIndex = 9;
-            this.rbStab.Text = "Постоянная скидка";
-            this.rbStab.UseVisualStyleBackColor = true;
-            this.rbStab.Click += new System.EventHandler(this.rbTime_Click);
             // 
             // dtpStart
             // 
@@ -191,11 +210,219 @@
             this.cmbTypeAgreements.Size = new System.Drawing.Size(413, 21);
             this.cmbTypeAgreements.TabIndex = 7;
             // 
+            // lPercentDiscount
+            // 
+            this.lPercentDiscount.AutoSize = true;
+            this.lPercentDiscount.Location = new System.Drawing.Point(12, 164);
+            this.lPercentDiscount.Name = "lPercentDiscount";
+            this.lPercentDiscount.Size = new System.Drawing.Size(246, 13);
+            this.lPercentDiscount.TabIndex = 11;
+            this.lPercentDiscount.Text = "Процент скидки от общей стоимости договора";
+            // 
+            // tbPercentDiscount
+            // 
+            this.tbPercentDiscount.Location = new System.Drawing.Point(411, 160);
+            this.tbPercentDiscount.MaxLength = 15;
+            this.tbPercentDiscount.Name = "tbPercentDiscount";
+            this.tbPercentDiscount.Size = new System.Drawing.Size(119, 20);
+            this.tbPercentDiscount.TabIndex = 12;
+            this.tbPercentDiscount.Text = "0,00";
+            this.tbPercentDiscount.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.tbPercentDiscount.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbDecimal_KeyPress);
+            this.tbPercentDiscount.Validating += new System.ComponentModel.CancelEventHandler(this.tbPercentDiscount_Validating);
+            // 
+            // lDiscountPrice
+            // 
+            this.lDiscountPrice.AutoSize = true;
+            this.lDiscountPrice.Location = new System.Drawing.Point(12, 190);
+            this.lDiscountPrice.Name = "lDiscountPrice";
+            this.lDiscountPrice.Size = new System.Drawing.Size(227, 13);
+            this.lDiscountPrice.TabIndex = 11;
+            this.lDiscountPrice.Text = "Новая цена стоимости 1 квадратного мета";
+            // 
+            // tbDiscountPrice
+            // 
+            this.tbDiscountPrice.Location = new System.Drawing.Point(411, 186);
+            this.tbDiscountPrice.MaxLength = 15;
+            this.tbDiscountPrice.Name = "tbDiscountPrice";
+            this.tbDiscountPrice.Size = new System.Drawing.Size(119, 20);
+            this.tbDiscountPrice.TabIndex = 12;
+            this.tbDiscountPrice.Text = "0,00";
+            this.tbDiscountPrice.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.tbDiscountPrice.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbDecimal_KeyPress);
+            this.tbDiscountPrice.Validating += new System.ComponentModel.CancelEventHandler(this.tbPercentDiscount_Validating);
+            // 
+            // lPrice
+            // 
+            this.lPrice.AutoSize = true;
+            this.lPrice.Location = new System.Drawing.Point(12, 216);
+            this.lPrice.Name = "lPrice";
+            this.lPrice.Size = new System.Drawing.Size(373, 13);
+            this.lPrice.TabIndex = 11;
+            this.lPrice.Text = "Цена 1 квадратного метра, при которой договора попадают под скидки";
+            // 
+            // tbPrice
+            // 
+            this.tbPrice.Location = new System.Drawing.Point(411, 212);
+            this.tbPrice.MaxLength = 15;
+            this.tbPrice.Name = "tbPrice";
+            this.tbPrice.Size = new System.Drawing.Size(119, 20);
+            this.tbPrice.TabIndex = 12;
+            this.tbPrice.Text = "0,00";
+            this.tbPrice.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.tbPrice.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbDecimal_KeyPress);
+            this.tbPrice.Validating += new System.ComponentModel.CancelEventHandler(this.tbPercentDiscount_Validating);
+            // 
+            // lTotalPrice
+            // 
+            this.lTotalPrice.AutoSize = true;
+            this.lTotalPrice.Location = new System.Drawing.Point(12, 242);
+            this.lTotalPrice.Name = "lTotalPrice";
+            this.lTotalPrice.Size = new System.Drawing.Size(394, 13);
+            this.lTotalPrice.TabIndex = 11;
+            this.lTotalPrice.Text = "Общая Стоимость по договору, при которой договора попадают под скидки";
+            // 
+            // tbTotalPrice
+            // 
+            this.tbTotalPrice.Location = new System.Drawing.Point(411, 238);
+            this.tbTotalPrice.MaxLength = 15;
+            this.tbTotalPrice.Name = "tbTotalPrice";
+            this.tbTotalPrice.Size = new System.Drawing.Size(119, 20);
+            this.tbTotalPrice.TabIndex = 12;
+            this.tbTotalPrice.Text = "0,00";
+            this.tbTotalPrice.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.tbTotalPrice.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbDecimal_KeyPress);
+            this.tbTotalPrice.Validating += new System.ComponentModel.CancelEventHandler(this.tbPercentDiscount_Validating);
+            // 
+            // cmbBuilding
+            // 
+            this.cmbBuilding.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbBuilding.FormattingEnabled = true;
+            this.cmbBuilding.Location = new System.Drawing.Point(110, 296);
+            this.cmbBuilding.Name = "cmbBuilding";
+            this.cmbBuilding.Size = new System.Drawing.Size(326, 21);
+            this.cmbBuilding.TabIndex = 15;
+            this.cmbBuilding.SelectionChangeCommitted += new System.EventHandler(this.cmbObject_SelectionChangeCommitted);
+            // 
+            // cmbObject
+            // 
+            this.cmbObject.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbObject.FormattingEnabled = true;
+            this.cmbObject.Location = new System.Drawing.Point(110, 269);
+            this.cmbObject.Name = "cmbObject";
+            this.cmbObject.Size = new System.Drawing.Size(326, 21);
+            this.cmbObject.TabIndex = 16;
+            this.cmbObject.SelectionChangeCommitted += new System.EventHandler(this.cmbObject_SelectionChangeCommitted);
+            // 
+            // lObject
+            // 
+            this.lObject.AutoSize = true;
+            this.lObject.Location = new System.Drawing.Point(54, 272);
+            this.lObject.Name = "lObject";
+            this.lObject.Size = new System.Drawing.Size(45, 13);
+            this.lObject.TabIndex = 13;
+            this.lObject.Text = "Объект";
+            // 
+            // lBuilding
+            // 
+            this.lBuilding.AutoSize = true;
+            this.lBuilding.Location = new System.Drawing.Point(55, 299);
+            this.lBuilding.Name = "lBuilding";
+            this.lBuilding.Size = new System.Drawing.Size(44, 13);
+            this.lBuilding.TabIndex = 14;
+            this.lBuilding.Text = "Здание";
+            // 
+            // lFloor
+            // 
+            this.lFloor.AutoSize = true;
+            this.lFloor.Location = new System.Drawing.Point(66, 326);
+            this.lFloor.Name = "lFloor";
+            this.lFloor.Size = new System.Drawing.Size(33, 13);
+            this.lFloor.TabIndex = 14;
+            this.lFloor.Text = "Этаж";
+            // 
+            // cmbFloor
+            // 
+            this.cmbFloor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbFloor.FormattingEnabled = true;
+            this.cmbFloor.Location = new System.Drawing.Point(110, 323);
+            this.cmbFloor.Name = "cmbFloor";
+            this.cmbFloor.Size = new System.Drawing.Size(326, 21);
+            this.cmbFloor.TabIndex = 15;
+            this.cmbFloor.SelectionChangeCommitted += new System.EventHandler(this.cmbObject_SelectionChangeCommitted);
+            // 
+            // lObjectDiscount
+            // 
+            this.lObjectDiscount.AutoSize = true;
+            this.lObjectDiscount.Location = new System.Drawing.Point(15, 353);
+            this.lObjectDiscount.Name = "lObjectDiscount";
+            this.lObjectDiscount.Size = new System.Drawing.Size(84, 13);
+            this.lObjectDiscount.TabIndex = 14;
+            this.lObjectDiscount.Text = "Объект скидки";
+            // 
+            // cmbObjectDiscount
+            // 
+            this.cmbObjectDiscount.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbObjectDiscount.FormattingEnabled = true;
+            this.cmbObjectDiscount.Location = new System.Drawing.Point(110, 350);
+            this.cmbObjectDiscount.Name = "cmbObjectDiscount";
+            this.cmbObjectDiscount.Size = new System.Drawing.Size(326, 21);
+            this.cmbObjectDiscount.TabIndex = 15;
+            this.cmbObjectDiscount.SelectionChangeCommitted += new System.EventHandler(this.cmbObjectDiscount_SelectionChangeCommitted);
+            // 
+            // chbIsException
+            // 
+            this.chbIsException.AutoSize = true;
+            this.chbIsException.Location = new System.Drawing.Point(177, 404);
+            this.chbIsException.Name = "chbIsException";
+            this.chbIsException.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.chbIsException.Size = new System.Drawing.Size(259, 17);
+            this.chbIsException.TabIndex = 17;
+            this.chbIsException.Text = "Включения объекта в скидку или исключения";
+            this.chbIsException.UseVisualStyleBackColor = true;
+            // 
+            // lComby
+            // 
+            this.lComby.Location = new System.Drawing.Point(12, 380);
+            this.lComby.Name = "lComby";
+            this.lComby.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.lComby.Size = new System.Drawing.Size(109, 18);
+            this.lComby.TabIndex = 14;
+            this.lComby.Text = ".";
+            // 
+            // cmbComby
+            // 
+            this.cmbComby.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbComby.FormattingEnabled = true;
+            this.cmbComby.Location = new System.Drawing.Point(127, 377);
+            this.cmbComby.Name = "cmbComby";
+            this.cmbComby.Size = new System.Drawing.Size(309, 21);
+            this.cmbComby.TabIndex = 15;
+            // 
             // frmAdd
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(538, 479);
+            this.ClientSize = new System.Drawing.Size(550, 434);
+            this.Controls.Add(this.chbIsException);
+            this.Controls.Add(this.cmbComby);
+            this.Controls.Add(this.cmbObjectDiscount);
+            this.Controls.Add(this.cmbFloor);
+            this.Controls.Add(this.lComby);
+            this.Controls.Add(this.cmbBuilding);
+            this.Controls.Add(this.lObjectDiscount);
+            this.Controls.Add(this.cmbObject);
+            this.Controls.Add(this.lFloor);
+            this.Controls.Add(this.lObject);
+            this.Controls.Add(this.lBuilding);
+            this.Controls.Add(this.tbTotalPrice);
+            this.Controls.Add(this.lTotalPrice);
+            this.Controls.Add(this.tbPrice);
+            this.Controls.Add(this.lPrice);
+            this.Controls.Add(this.tbDiscountPrice);
+            this.Controls.Add(this.lDiscountPrice);
+            this.Controls.Add(this.tbPercentDiscount);
+            this.Controls.Add(this.lPercentDiscount);
             this.Controls.Add(this.lEnd);
             this.Controls.Add(this.lStart);
             this.Controls.Add(this.dtpEnd);
@@ -242,5 +469,24 @@
         private System.Windows.Forms.ComboBox cmbTypeTenant;
         private System.Windows.Forms.Label lTypeAgreements;
         private System.Windows.Forms.ComboBox cmbTypeAgreements;
+        private System.Windows.Forms.Label lPercentDiscount;
+        private System.Windows.Forms.TextBox tbPercentDiscount;
+        private System.Windows.Forms.Label lDiscountPrice;
+        private System.Windows.Forms.TextBox tbDiscountPrice;
+        private System.Windows.Forms.Label lPrice;
+        private System.Windows.Forms.TextBox tbPrice;
+        private System.Windows.Forms.Label lTotalPrice;
+        private System.Windows.Forms.TextBox tbTotalPrice;
+        private System.Windows.Forms.ComboBox cmbBuilding;
+        private System.Windows.Forms.ComboBox cmbObject;
+        private System.Windows.Forms.Label lObject;
+        private System.Windows.Forms.Label lBuilding;
+        private System.Windows.Forms.Label lFloor;
+        private System.Windows.Forms.ComboBox cmbFloor;
+        private System.Windows.Forms.Label lObjectDiscount;
+        private System.Windows.Forms.ComboBox cmbObjectDiscount;
+        private System.Windows.Forms.CheckBox chbIsException;
+        private System.Windows.Forms.Label lComby;
+        private System.Windows.Forms.ComboBox cmbComby;
     }
 }
