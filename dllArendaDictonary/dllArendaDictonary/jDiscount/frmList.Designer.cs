@@ -28,17 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tbNumber = new System.Windows.Forms.TextBox();
             this.dgvData = new System.Windows.Forms.DataGridView();
+            this.cDateStart = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cDateEnd = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.chbNotActive = new System.Windows.Forms.CheckBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btAdd = new System.Windows.Forms.Button();
             this.btEdit = new System.Windows.Forms.Button();
             this.btDelete = new System.Windows.Forms.Button();
             this.btClose = new System.Windows.Forms.Button();
-            this.cDateStart = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cDateEnd = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btConfirmD = new System.Windows.Forms.Button();
+            this.pConfirmD = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
             this.SuspendLayout();
             // 
@@ -59,14 +62,14 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvData.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvData.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvData.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.dgvData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvData.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.cDateStart,
@@ -84,74 +87,6 @@
             this.dgvData.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.dgvData_RowPrePaint);
             this.dgvData.SelectionChanged += new System.EventHandler(this.dgvData_SelectionChanged);
             // 
-            // chbNotActive
-            // 
-            this.chbNotActive.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.chbNotActive.AutoSize = true;
-            this.chbNotActive.Location = new System.Drawing.Point(39, 470);
-            this.chbNotActive.Name = "chbNotActive";
-            this.chbNotActive.Size = new System.Drawing.Size(113, 17);
-            this.chbNotActive.TabIndex = 2;
-            this.chbNotActive.Text = "- недействующие";
-            this.chbNotActive.UseVisualStyleBackColor = true;
-            this.chbNotActive.Visible = false;
-            this.chbNotActive.CheckedChanged += new System.EventHandler(this.chbNotActive_CheckedChanged);
-            // 
-            // panel1
-            // 
-            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(204)))), ((int)(((byte)(255)))));
-            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel1.Location = new System.Drawing.Point(12, 468);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(21, 21);
-            this.panel1.TabIndex = 3;
-            this.panel1.Visible = false;
-            // 
-            // btAdd
-            // 
-            this.btAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btAdd.Image = global::dllArendaDictonary.Properties.Resources.Add;
-            this.btAdd.Location = new System.Drawing.Point(702, 462);
-            this.btAdd.Name = "btAdd";
-            this.btAdd.Size = new System.Drawing.Size(32, 32);
-            this.btAdd.TabIndex = 4;
-            this.btAdd.UseVisualStyleBackColor = true;
-            this.btAdd.Click += new System.EventHandler(this.btAdd_Click);
-            // 
-            // btEdit
-            // 
-            this.btEdit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btEdit.Image = global::dllArendaDictonary.Properties.Resources.Edit;
-            this.btEdit.Location = new System.Drawing.Point(740, 462);
-            this.btEdit.Name = "btEdit";
-            this.btEdit.Size = new System.Drawing.Size(32, 32);
-            this.btEdit.TabIndex = 4;
-            this.btEdit.UseVisualStyleBackColor = true;
-            this.btEdit.Click += new System.EventHandler(this.btEdit_Click);
-            // 
-            // btDelete
-            // 
-            this.btDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btDelete.Image = global::dllArendaDictonary.Properties.Resources.Trash;
-            this.btDelete.Location = new System.Drawing.Point(778, 462);
-            this.btDelete.Name = "btDelete";
-            this.btDelete.Size = new System.Drawing.Size(32, 32);
-            this.btDelete.TabIndex = 4;
-            this.btDelete.UseVisualStyleBackColor = true;
-            this.btDelete.Click += new System.EventHandler(this.btDelete_Click);
-            // 
-            // btClose
-            // 
-            this.btClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btClose.Image = global::dllArendaDictonary.Properties.Resources.Exit;
-            this.btClose.Location = new System.Drawing.Point(816, 462);
-            this.btClose.Name = "btClose";
-            this.btClose.Size = new System.Drawing.Size(32, 32);
-            this.btClose.TabIndex = 4;
-            this.btClose.UseVisualStyleBackColor = true;
-            this.btClose.Click += new System.EventHandler(this.btClose_Click);
-            // 
             // cDateStart
             // 
             this.cDateStart.DataPropertyName = "DateStart";
@@ -166,15 +101,116 @@
             this.cDateEnd.Name = "cDateEnd";
             this.cDateEnd.ReadOnly = true;
             // 
+            // chbNotActive
+            // 
+            this.chbNotActive.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.chbNotActive.AutoSize = true;
+            this.chbNotActive.Location = new System.Drawing.Point(281, 473);
+            this.chbNotActive.Name = "chbNotActive";
+            this.chbNotActive.Size = new System.Drawing.Size(113, 17);
+            this.chbNotActive.TabIndex = 2;
+            this.chbNotActive.Text = "- недействующие";
+            this.chbNotActive.UseVisualStyleBackColor = true;
+            this.chbNotActive.Visible = false;
+            this.chbNotActive.CheckedChanged += new System.EventHandler(this.chbNotActive_CheckedChanged);
+            // 
+            // panel1
+            // 
+            this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(204)))), ((int)(((byte)(255)))));
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Location = new System.Drawing.Point(254, 471);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(21, 21);
+            this.panel1.TabIndex = 3;
+            this.panel1.Visible = false;
+            // 
+            // btAdd
+            // 
+            this.btAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btAdd.Image = global::dllArendaDictonary.Properties.Resources.Add;
+            this.btAdd.Location = new System.Drawing.Point(702, 465);
+            this.btAdd.Name = "btAdd";
+            this.btAdd.Size = new System.Drawing.Size(32, 32);
+            this.btAdd.TabIndex = 4;
+            this.btAdd.UseVisualStyleBackColor = true;
+            this.btAdd.Click += new System.EventHandler(this.btAdd_Click);
+            // 
+            // btEdit
+            // 
+            this.btEdit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btEdit.Image = global::dllArendaDictonary.Properties.Resources.Edit;
+            this.btEdit.Location = new System.Drawing.Point(740, 465);
+            this.btEdit.Name = "btEdit";
+            this.btEdit.Size = new System.Drawing.Size(32, 32);
+            this.btEdit.TabIndex = 4;
+            this.btEdit.UseVisualStyleBackColor = true;
+            this.btEdit.Click += new System.EventHandler(this.btEdit_Click);
+            // 
+            // btDelete
+            // 
+            this.btDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btDelete.Image = global::dllArendaDictonary.Properties.Resources.Trash;
+            this.btDelete.Location = new System.Drawing.Point(778, 465);
+            this.btDelete.Name = "btDelete";
+            this.btDelete.Size = new System.Drawing.Size(32, 32);
+            this.btDelete.TabIndex = 4;
+            this.btDelete.UseVisualStyleBackColor = true;
+            this.btDelete.Click += new System.EventHandler(this.btDelete_Click);
+            // 
+            // btClose
+            // 
+            this.btClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btClose.Image = global::dllArendaDictonary.Properties.Resources.Exit;
+            this.btClose.Location = new System.Drawing.Point(816, 465);
+            this.btClose.Name = "btClose";
+            this.btClose.Size = new System.Drawing.Size(32, 32);
+            this.btClose.TabIndex = 4;
+            this.btClose.UseVisualStyleBackColor = true;
+            this.btClose.Click += new System.EventHandler(this.btClose_Click);
+            // 
+            // btConfirmD
+            // 
+            this.btConfirmD.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btConfirmD.Image = global::dllArendaDictonary.Properties.Resources.tick;
+            this.btConfirmD.Location = new System.Drawing.Point(612, 465);
+            this.btConfirmD.Name = "btConfirmD";
+            this.btConfirmD.Size = new System.Drawing.Size(32, 32);
+            this.btConfirmD.TabIndex = 5;
+            this.btConfirmD.UseVisualStyleBackColor = true;
+            this.btConfirmD.Click += new System.EventHandler(this.btConfirmD_Click);
+            // 
+            // pConfirmD
+            // 
+            this.pConfirmD.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.pConfirmD.BackColor = System.Drawing.Color.Yellow;
+            this.pConfirmD.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pConfirmD.Location = new System.Drawing.Point(12, 471);
+            this.pConfirmD.Name = "pConfirmD";
+            this.pConfirmD.Size = new System.Drawing.Size(21, 21);
+            this.pConfirmD.TabIndex = 3;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(39, 475);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(100, 13);
+            this.label1.TabIndex = 6;
+            this.label1.Text = "Подтвержденно Д";
+            // 
             // frmList
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(860, 506);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.btConfirmD);
             this.Controls.Add(this.btAdd);
             this.Controls.Add(this.btEdit);
             this.Controls.Add(this.btDelete);
             this.Controls.Add(this.btClose);
+            this.Controls.Add(this.pConfirmD);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.chbNotActive);
             this.Controls.Add(this.dgvData);
@@ -185,7 +221,7 @@
             this.Name = "frmList";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Справочник земельных участков";
+            this.Text = "Справочник скидок";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmList_FormClosing);
             this.Load += new System.EventHandler(this.frmList_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).EndInit();
@@ -206,5 +242,8 @@
         private System.Windows.Forms.Button btAdd;
         private System.Windows.Forms.DataGridViewTextBoxColumn cDateStart;
         private System.Windows.Forms.DataGridViewTextBoxColumn cDateEnd;
+        private System.Windows.Forms.Button btConfirmD;
+        private System.Windows.Forms.Panel pConfirmD;
+        private System.Windows.Forms.Label label1;
     }
 }

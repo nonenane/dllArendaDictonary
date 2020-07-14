@@ -7,7 +7,7 @@ GO
 -- Create date: 2020-06-23
 -- Description:	Получение списка секций
 -- =============================================
-CREATE PROCEDURE [Arenda].[spg_getDiscountObject]		 
+ALTER PROCEDURE [Arenda].[spg_getDiscountObject]		 
 	@id_tDiscount int
 AS
 BEGIN
@@ -17,10 +17,12 @@ select
 	d.id,
 	d.id_Buildings,
 	d.id_Floor,
-	d.id_LandPlot,
 	d.id_ObjectLease,
-	d.id_ReclamaPlace,
-	d.id_Sections,
+	d.id_rentalObject,
+	d.typeRentalObject,
+	--d.id_LandPlot,	
+	--d.id_ReclamaPlace,
+	--d.id_Sections,
 	d.isException
 from 
 	[Arenda].[j_DiscountObject] d

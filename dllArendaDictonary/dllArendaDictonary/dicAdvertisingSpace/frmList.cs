@@ -1,5 +1,6 @@
 ﻿using Nwuram.Framework.Logging;
 using Nwuram.Framework.Settings.Connection;
+using Nwuram.Framework.Settings.User;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -30,6 +31,8 @@ namespace dllArendaDictonary.dicAdvertisingSpace
             tp.SetToolTip(btEdit, "Редактировать");
             tp.SetToolTip(btDelete, "Удалить");
             tp.SetToolTip(btClose, "Выход");
+
+            btAdd.Visible = btEdit.Visible = btDelete.Visible = new List<string> { "РКВ" }.Contains(UserSettings.User.StatusCode);
         }
 
         private void frmList_Load(object sender, EventArgs e)

@@ -1,5 +1,6 @@
 ﻿using Nwuram.Framework.Logging;
 using Nwuram.Framework.Settings.Connection;
+using Nwuram.Framework.Settings.User;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -30,6 +31,7 @@ namespace dllArendaDictonary.dicTypeActivities
             tp.SetToolTip(btEdit, "Редактировать");
             tp.SetToolTip(btDelete, "Удалить");
             tp.SetToolTip(btClose, "Выход");
+            btAdd.Visible = btEdit.Visible = btDelete.Visible = new List<string> { "РКВ" }.Contains(UserSettings.User.StatusCode);
         }
 
         private void frmList_Load(object sender, EventArgs e)
@@ -44,7 +46,7 @@ namespace dllArendaDictonary.dicTypeActivities
 
         private void btAdd_Click(object sender, EventArgs e)
         {
-            if (DialogResult.OK == new frmAdd() { Text = "Добавить вид дейтельности" }.ShowDialog())
+            if (DialogResult.OK == new frmAdd() { Text = "Добавить вид деятельности" }.ShowDialog())
                 get_data();
         }
 
@@ -53,7 +55,7 @@ namespace dllArendaDictonary.dicTypeActivities
             if (dgvData.CurrentRow != null && dgvData.CurrentRow.Index != -1 && dtData != null && dtData.DefaultView.Count != 0)
             {
                 DataRowView row = dtData.DefaultView[dgvData.CurrentRow.Index];
-                if (DialogResult.OK == new frmAdd() { Text = "Редактировать вид дейтельности", row = row }.ShowDialog())
+                if (DialogResult.OK == new frmAdd() { Text = "Редактировать вид деятельности", row = row }.ShowDialog())
                     get_data();
             }
         }

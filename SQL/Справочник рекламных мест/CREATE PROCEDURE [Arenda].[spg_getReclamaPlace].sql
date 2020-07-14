@@ -22,7 +22,9 @@ BEGIN
 		r.Width,
 		o.cName as nameObject,
 		b.cName as nameBuild,
-		cast(r.Length as varchar(1000))+' x '+cast(r.Width as varchar(1000)) as nameSize
+		cast(r.Length as varchar(1000))+' x '+cast(r.Width as varchar(1000)) as nameSize,
+		cast(0 as bit) as isSelect,
+		cast(0 as bit) as isException
 	from 
 		[Arenda].[s_ReclamaPlace] r
 			left join [Arenda].[s_ObjectLease] o on o.id = r.id_ObjectLease

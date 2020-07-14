@@ -1,5 +1,6 @@
 ﻿using Nwuram.Framework.Logging;
 using Nwuram.Framework.Settings.Connection;
+using Nwuram.Framework.Settings.User;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -30,6 +31,7 @@ namespace dllArendaDictonary.dicLandPlot
             tp.SetToolTip(btEdit, "Редактировать");
             tp.SetToolTip(btDelete, "Удалить");
             tp.SetToolTip(btClose, "Выход");
+            btAdd.Visible = btEdit.Visible = btDelete.Visible = new List<string> { "РКВ" }.Contains(UserSettings.User.StatusCode);
         }
 
         private void frmList_Load(object sender, EventArgs e)
@@ -76,7 +78,7 @@ namespace dllArendaDictonary.dicLandPlot
                 Int64 AreaPlot = (Int64)dtData.DefaultView[dgvData.CurrentRow.Index]["AreaPlot"];
                 string NumberPlot = (string)dtData.DefaultView[dgvData.CurrentRow.Index]["NumberPlot"];
 
-                Task<DataTable> task = Config.hCntMain.setLandPlot(id, NumberPlot, id_ObjectLease, Width, isActive, true, 0);
+                Task<DataTable> task = Config.hCntMain.setLandPlot(id, NumberPlot, id_ObjectLease, AreaPlot, isActive, true, 0);
                 task.Wait();
 
                 if (task.Result == null)
@@ -100,7 +102,7 @@ namespace dllArendaDictonary.dicLandPlot
                     if (DialogResult.Yes == MessageBox.Show(Config.centralText("Выбранная для удаления запись используется в программе.\nСделать запись недействующей?\n"), "Удаление записи", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2))
                     {
                         setLog(id, 3);
-                        task = Config.hCntMain.setLandPlot(id, NumberPlot, id_ObjectLease, Width, !isActive, false, 0);
+                        task = Config.hCntMain.setLandPlot(id, NumberPlot, id_ObjectLease, AreaPlot, !isActive, false, 0);
                         task.Wait();
                         if (task.Result == null)
                         {
@@ -117,7 +119,7 @@ namespace dllArendaDictonary.dicLandPlot
                     if (DialogResult.Yes == MessageBox.Show("Удалить выбранную запись?", "Удаление записи", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2))
                     {
                         setLog(id, 2);
-                        task = Config.hCntMain.setLandPlot(id, NumberPlot, id_ObjectLease, Width, isActive, true, 1);
+                        task = Config.hCntMain.setLandPlot(id, NumberPlot, id_ObjectLease, AreaPlot, isActive, true, 1);
                         task.Wait();
                         if (task.Result == null)
                         {
@@ -133,7 +135,7 @@ namespace dllArendaDictonary.dicLandPlot
                     if (DialogResult.Yes == MessageBox.Show("Сделать выбранную запись действующей?", "Восстановление записи", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2))
                     {
                         setLog(id, 4);
-                        task = Config.hCntMain.setLandPlot(id, NumberPlot, id_ObjectLease, Width, !isActive, false, 0);
+                        task = Config.hCntMain.setLandPlot(id, NumberPlot, id_ObjectLease, AreaPlot, !isActive, false, 0);
                         task.Wait();
                         if (task.Result == null)
                         {

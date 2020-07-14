@@ -7,7 +7,7 @@ GO
 -- Create date: 2020-04-25
 -- Description:	«апись справочника земельных участков
 -- =============================================
-CREATE PROCEDURE [Arenda].[spg_setLandPlot]		 
+ALTER PROCEDURE [Arenda].[spg_setLandPlot]		 
 	@id int,
 	@NumberPlot varchar(max),	
 	@id_ObjectLease int,	
@@ -65,7 +65,7 @@ BEGIN TRY
 						END
 
 					
-					IF EXISTS(select TOP(1) id from [Arenda].[j_DiscountObject] where id_LandPlot = @id)
+					IF EXISTS(select TOP(1) id from [Arenda].[j_DiscountObject] where id_rentalObject = @id and typeRentalObject = 3)
 						BEGIN
 							select -2 as id
 							return;

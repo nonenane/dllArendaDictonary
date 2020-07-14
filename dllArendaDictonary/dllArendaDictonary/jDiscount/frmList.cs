@@ -1,5 +1,6 @@
 ﻿using Nwuram.Framework.Logging;
 using Nwuram.Framework.Settings.Connection;
+using Nwuram.Framework.Settings.User;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -30,6 +31,10 @@ namespace dllArendaDictonary.jDiscount
             tp.SetToolTip(btEdit, "Редактировать");
             tp.SetToolTip(btDelete, "Удалить");
             tp.SetToolTip(btClose, "Выход");
+            tp.SetToolTip(btConfirmD, "Подтвердить");
+
+            btConfirmD.Visible = Nwuram.Framework.Settings.User.UserSettings.User.StatusCode.Equals("Д");
+            btAdd.Visible = btEdit.Visible = btDelete.Visible = new List<string> { "РКВ" }.Contains(UserSettings.User.StatusCode);
         }
 
         private void frmList_Load(object sender, EventArgs e)
@@ -44,7 +49,7 @@ namespace dllArendaDictonary.jDiscount
 
         private void btAdd_Click(object sender, EventArgs e)
         {
-            if (DialogResult.OK == new frmAdd() { Text = "Добавить вид дейтельности" }.ShowDialog())
+            if (DialogResult.OK == new frmAdd() { Text = "Добавить скидку" }.ShowDialog())
                 get_data();
         }
 
@@ -53,7 +58,7 @@ namespace dllArendaDictonary.jDiscount
             if (dgvData.CurrentRow != null && dgvData.CurrentRow.Index != -1 && dtData != null && dtData.DefaultView.Count != 0)
             {
                 DataRowView row = dtData.DefaultView[dgvData.CurrentRow.Index];
-                if (DialogResult.OK == new frmAdd() { Text = "Редактировать вид дейтельности", row = row }.ShowDialog())
+                if (DialogResult.OK == new frmAdd() { Text = "Редактировать скидку", row = row }.ShowDialog())
                     get_data();
             }
         }
@@ -63,10 +68,18 @@ namespace dllArendaDictonary.jDiscount
             if (dgvData.CurrentRow != null && dgvData.CurrentRow.Index != -1 && dtData != null && dtData.DefaultView.Count != 0)
             {
                 int id = (int)dtData.DefaultView[dgvData.CurrentRow.Index]["id"];
-                bool isActive = (bool)dtData.DefaultView[dgvData.CurrentRow.Index]["isActive"];
-                string cName = (string)dtData.DefaultView[dgvData.CurrentRow.Index]["cName"];
+                DateTime dateStart = (DateTime)dtData.DefaultView[dgvData.CurrentRow.Index]["DateStart"];
+                DateTime? dateEnd = null;
+                if (dtData.DefaultView[dgvData.CurrentRow.Index]["DateEnd"] !=DBNull.Value)
+                    dateEnd = (DateTime)dtData.DefaultView[dgvData.CurrentRow.Index]["DateEnd"];
 
-                Task<DataTable> task = Config.hCntMain.setTypeActivities(id, cName, isActive, true, 0);
+                int id_TypeDiscount = (int)dtData.DefaultView[dgvData.CurrentRow.Index]["id_TypeDiscount"];
+                int id_TypeTenant = (int)dtData.DefaultView[dgvData.CurrentRow.Index]["id_TypeTenant"];
+                int id_TypeAgreements = (int)dtData.DefaultView[dgvData.CurrentRow.Index]["id_TypeAgreements"];
+                int id_StatusDiscount = 1;
+                bool isActive = true;
+
+                Task<DataTable> task = Config.hCntMain.setTDiscount(id, dateStart, dateEnd, id_TypeDiscount, id_TypeTenant, id_TypeAgreements, id_StatusDiscount, isActive, true, 0);
                 task.Wait();
 
                 if (task.Result == null)
@@ -90,7 +103,7 @@ namespace dllArendaDictonary.jDiscount
                     if (DialogResult.Yes == MessageBox.Show(Config.centralText("Выбранная для удаления запись используется в программе.\nСделать запись недействующей?\n"), "Удаление записи", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2))
                     {
                         setLog(id, 3);
-                        task = Config.hCntMain.setTypeActivities(id, cName, !isActive, false, 0);
+                        task = Config.hCntMain.setTDiscount(id, dateStart, dateEnd, id_TypeDiscount, id_TypeTenant, id_TypeAgreements, id_StatusDiscount, !isActive, false, 0);
                         task.Wait();
                         if (task.Result == null)
                         {
@@ -107,7 +120,7 @@ namespace dllArendaDictonary.jDiscount
                     if (DialogResult.Yes == MessageBox.Show("Удалить выбранную запись?", "Удаление записи", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2))
                     {
                         setLog(id, 2);
-                        task = Config.hCntMain.setTypeActivities(id, cName, isActive, true, 1);
+                        task = Config.hCntMain.setTDiscount(id, dateStart, dateEnd, id_TypeDiscount, id_TypeTenant, id_TypeAgreements, id_StatusDiscount, isActive, true, 1);
                         task.Wait();
                         if (task.Result == null)
                         {
@@ -123,7 +136,7 @@ namespace dllArendaDictonary.jDiscount
                     if (DialogResult.Yes == MessageBox.Show("Сделать выбранную запись действующей?", "Восстановление записи", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2))
                     {
                         setLog(id, 4);
-                        task = Config.hCntMain.setTypeActivities(id, cName, !isActive, false, 0);
+                        task = Config.hCntMain.setTDiscount(id, dateStart, dateEnd, id_TypeDiscount, id_TypeTenant, id_TypeAgreements, id_StatusDiscount, !isActive, false, 0);
                         task.Wait();
                         if (task.Result == null)
                         {
@@ -157,6 +170,7 @@ namespace dllArendaDictonary.jDiscount
             if (dtData == null || dtData.Rows.Count == 0)
             {
                 btEdit.Enabled = btDelete.Enabled = false;
+                btConfirmD.Enabled = false;
                 return;
             }
 
@@ -190,11 +204,13 @@ namespace dllArendaDictonary.jDiscount
             {
                 btDelete.Enabled = false;
                 btEdit.Enabled = false;
+                btConfirmD.Enabled = false;
                 return;
             }
 
-            btDelete.Enabled = true;
-            btEdit.Enabled = true; //(bool)dtData.DefaultView[dgvData.CurrentRow.Index]["isActive"];
+            btDelete.Enabled = (int)dtData.DefaultView[dgvData.CurrentRow.Index]["id_StatusDiscount"] == 1;
+            btEdit.Enabled = (int)dtData.DefaultView[dgvData.CurrentRow.Index]["id_StatusDiscount"] == 1;
+            btConfirmD.Enabled = (int)dtData.DefaultView[dgvData.CurrentRow.Index]["id_StatusDiscount"] == 1;
         }
 
         private void dgvData_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
@@ -220,8 +236,9 @@ namespace dllArendaDictonary.jDiscount
             if (e.RowIndex != -1 && dtData != null && dtData.DefaultView.Count != 0)
             {
                 Color rColor = Color.White;
-                //    if (!(bool)dtData.DefaultView[e.RowIndex]["isActive"])
-                //        rColor = panel1.BackColor;
+                    if ((int)dtData.DefaultView[e.RowIndex]["id_StatusDiscount"]==2)
+                        rColor = pConfirmD.BackColor;
+
                 dgvData.Rows[e.RowIndex].DefaultCellStyle.BackColor = rColor;
                 dgvData.Rows[e.RowIndex].DefaultCellStyle.SelectionBackColor = rColor;
                 dgvData.Rows[e.RowIndex].DefaultCellStyle.SelectionForeColor = Color.Black;
@@ -299,6 +316,51 @@ namespace dllArendaDictonary.jDiscount
         private void cmbObject_SelectionChangeCommitted(object sender, EventArgs e)
         {
             setFilter();
+        }
+
+        private void btConfirmD_Click(object sender, EventArgs e)
+        {
+            if (dgvData.CurrentRow != null && dgvData.CurrentRow.Index != -1 && dtData != null && dtData.DefaultView.Count != 0)
+            {
+                int id = (int)dtData.DefaultView[dgvData.CurrentRow.Index]["id"];
+                
+                DateTime dateStart = (DateTime)dtData.DefaultView[dgvData.CurrentRow.Index]["DateStart"];
+                DateTime? dateEnd = null;
+                if (dtData.DefaultView[dgvData.CurrentRow.Index]["DateEnd"] != DBNull.Value)
+                    dateEnd = (DateTime)dtData.DefaultView[dgvData.CurrentRow.Index]["DateEnd"];
+                int id_TypeAgreements = (int)dtData.DefaultView[dgvData.CurrentRow.Index]["id_TypeAgreements"];
+                int id_TypeDiscount = (int)dtData.DefaultView[dgvData.CurrentRow.Index]["id_TypeDiscount"];
+                int id_TypeTenant = (int)dtData.DefaultView[dgvData.CurrentRow.Index]["id_TypeTenant"];
+                int id_StatusDiscount = 2;
+
+
+                Task<DataTable> task = Config.hCntMain.setTDiscount(id, dateStart, dateEnd, id_TypeDiscount, id_TypeTenant, id_TypeAgreements, id_StatusDiscount, true, false, 0);
+                task.Wait();
+
+                DataTable dtResult = task.Result;
+
+                if (dtResult == null || dtResult.Rows.Count == 0)
+                {
+                    MessageBox.Show("Не удалось сохранить данные", "Ошибка сохранения", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+
+                if ((int)dtResult.Rows[0]["id"] == -1)
+                {
+                    MessageBox.Show("В справочнике уже присутствует должность с таким наименованием.", "Сохранение", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+
+                if ((int)dtResult.Rows[0]["id"] == -9999)
+                {
+                    MessageBox.Show("Произошла неведомая хрень.", "Ошибка сохранения", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                get_data();
+            }
         }
     }
 }

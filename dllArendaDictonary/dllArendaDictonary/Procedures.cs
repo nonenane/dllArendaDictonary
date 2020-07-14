@@ -509,7 +509,7 @@ namespace dllArendaDictonary
             return dtResult;
         }
 
-        public async Task<DataTable> setDiscountObject(int id, int id_tDiscount, int? id_ObjectLease, int? id_Buildings,int? id_Floor,int? id_Sections,int? id_LandPlot,int? id_ReclamaPlace,bool isException, bool isActive, bool isDel, int result)
+        /*public async Task<DataTable> setDiscountObject(int id, int id_tDiscount, int? id_ObjectLease, int? id_Buildings,int? id_Floor,int? id_Sections,int? id_LandPlot,int? id_ReclamaPlace,bool isException, bool isActive, bool isDel, int result)
         {
             ap.Clear();
             ap.Add(id);
@@ -529,6 +529,29 @@ namespace dllArendaDictonary
             DataTable dtResult = executeProcedure("[Arenda].[spg_setDiscountObject]",
                  new string[13] { "@id", "@id_tDiscount", "@id_ObjectLease", "@id_Buildings", "@id_Floor", "@id_Sections", "@id_LandPlot", "@id_ReclamaPlace","@isException", "@isActive", "@id_user", "@result", "@isDel" },
                  new DbType[13] { DbType.Int32, DbType.Int32, DbType.Int32, DbType.Int32, DbType.Int32, DbType.Int32, DbType.Int32, DbType.Int32, DbType.Boolean, DbType.Boolean, DbType.Int32, DbType.Int32, DbType.Boolean }, ap);
+
+            return dtResult;
+        }*/
+
+        public async Task<DataTable> setDiscountObject(int id, int id_tDiscount, int id_ObjectLease, int? id_Buildings, int? id_Floor, int id_rentalObject, int typeRentalObject, bool isException, bool isActive, bool isDel, int result)
+        {
+            ap.Clear();
+            ap.Add(id);
+            ap.Add(id_tDiscount);
+            ap.Add(id_ObjectLease);
+            ap.Add(id_Buildings);
+            ap.Add(id_Floor);            
+            ap.Add(id_rentalObject);
+            ap.Add(typeRentalObject);
+            ap.Add(isException);
+            ap.Add(isActive);
+            ap.Add(UserSettings.User.Id);
+            ap.Add(result);
+            ap.Add(isDel);
+
+            DataTable dtResult = executeProcedure("[Arenda].[spg_setDiscountObject]",
+                 new string[12] { "@id", "@id_tDiscount", "@id_ObjectLease", "@id_Buildings", "@id_Floor", "@id_rentalObject", "@typeRentalObject", "@isException", "@isActive", "@id_user", "@result", "@isDel" },
+                 new DbType[12] { DbType.Int32, DbType.Int32, DbType.Int32, DbType.Int32, DbType.Int32, DbType.Int32, DbType.Int32, DbType.Boolean, DbType.Boolean, DbType.Int32, DbType.Int32, DbType.Boolean }, ap);
 
             return dtResult;
         }

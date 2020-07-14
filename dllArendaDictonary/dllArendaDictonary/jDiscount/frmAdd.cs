@@ -25,6 +25,7 @@ namespace dllArendaDictonary.jDiscount
         public frmAdd()
         {
             InitializeComponent();
+            dgvData.AutoGenerateColumns = false;
             ToolTip tp = new ToolTip();
             tp.SetToolTip(btClose, "Выход");
             tp.SetToolTip(btSave, "Сохранить");
@@ -77,6 +78,22 @@ namespace dllArendaDictonary.jDiscount
                 task.Wait();
                 if (task.Result != null && task.Result.Rows.Count > 0)
                 {
+                    cmbObjectDiscount.SelectedValue = task.Result.Rows[0]["typeRentalObject"];
+                    cmbObjectDiscount_SelectionChangeCommitted(cmbObjectDiscount, null);
+                    cmbObject.SelectedValue = task.Result.Rows[0]["id_ObjectLease"];
+                    cmbObject_SelectionChangeCommitted(cmbObject, null);
+
+                    foreach (DataRow row in task.Result.Rows)
+                    {
+                        EnumerableRowCollection<DataRow> rowCollect = dtData.AsEnumerable().Where(r => r.Field<int>("id") == (int)row["id_rentalObject"]);
+                        if (rowCollect.Count() > 0)
+                        {
+                            rowCollect.First()["isSelect"] = true;
+                            rowCollect.First()["isException"] = row["isException"];
+                        }
+                    }
+                    setActiveTransferButton();
+                    /*
                     id_DiscountObject = (int)task.Result.Rows[0]["id"];
 
                     if (task.Result.Rows[0]["id_ObjectLease"] != DBNull.Value)
@@ -112,6 +129,7 @@ namespace dllArendaDictonary.jDiscount
                     }
 
                     chbIsException.Checked = (bool)task.Result.Rows[0]["isException"];
+                    */
                 }
 
 
@@ -167,14 +185,14 @@ namespace dllArendaDictonary.jDiscount
 
             //
 
-            task = Config.hCntMain.getBuilding(false);
+            task = Config.hCntMain.getBuilding(true);
             task.Wait();
             DataTable dtBuilding = task.Result;
 
             cmbBuilding.DisplayMember = "cName";
             cmbBuilding.ValueMember = "id";
             cmbBuilding.DataSource = dtBuilding;
-            cmbBuilding.SelectedIndex = -1;
+            //cmbBuilding.SelectedIndex = -1;
 
             task = Config.hCntMain.getObjectLease(false);
             task.Wait();
@@ -185,14 +203,14 @@ namespace dllArendaDictonary.jDiscount
             cmbObject.DataSource = dtObjectLease;
             cmbObject.SelectedIndex = -1;
 
-            task = Config.hCntMain.getFloors(false);
+            task = Config.hCntMain.getFloors(true);
             task.Wait();
             DataTable dtFloors = task.Result;
 
             cmbFloor.DisplayMember = "cName";
             cmbFloor.ValueMember = "id";
             cmbFloor.DataSource = dtFloors;
-            cmbFloor.SelectedIndex = -1;
+            //cmbFloor.SelectedIndex = -1;
 
 
             task = Config.hCntMain.getObjectDiscount(false);
@@ -295,12 +313,12 @@ namespace dllArendaDictonary.jDiscount
                 return;
             }
 
-            if (cmbComby.SelectedIndex == -1)
-            {
-                MessageBox.Show(Config.centralText($"Необходимо выбрать\n \"{lComby.Text}\"\n"), "Ошибка сохранения", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                cmbComby.Focus();
-                return;
-            }
+            //if (cmbComby.SelectedIndex == -1)
+            //{
+            //    MessageBox.Show(Config.centralText($"Необходимо выбрать\n \"{lComby.Text}\"\n"), "Ошибка сохранения", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            //    cmbComby.Focus();
+            //    return;
+            //}
 
             #endregion
             
@@ -359,7 +377,8 @@ namespace dllArendaDictonary.jDiscount
 
             task = Config.hCntMain.setDiscountValue(id_DiscountValue, id, decimal.Parse(tbPercentDiscount.Text), decimal.Parse(tbDiscountPrice.Text), decimal.Parse(tbPrice.Text), decimal.Parse(tbTotalPrice.Text), true, false, 0);
             task.Wait();
-            
+            dtResult = task.Result;
+
             if (dtResult == null || dtResult.Rows.Count == 0)
             {
                 MessageBox.Show("Не удалось сохранить данные", "Ошибка сохранения", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -373,41 +392,82 @@ namespace dllArendaDictonary.jDiscount
             }
 
 
-            int? id_ObjectLease=null;
-            if (cmbObject.SelectedValue != null) id_ObjectLease = (int)cmbObject.SelectedValue;
+            //int? id_ObjectLease=null;
+            //if (cmbObject.SelectedValue != null) id_ObjectLease = (int)cmbObject.SelectedValue;
 
-            int? id_Buildings = null;
-            if (cmbBuilding.SelectedValue != null) id_Buildings = (int)cmbBuilding.SelectedValue;
-            
-            int? id_Floor = null;
-            if (cmbFloor.SelectedValue != null) id_Floor = (int)cmbFloor.SelectedValue;
-            
-            int? id_Sections = null;
-            if ((int)cmbObjectDiscount.SelectedValue == 1) id_Sections = (int)cmbComby.SelectedValue;
-                                    
-            int? id_ReclamaPlace = null;
-            if ((int)cmbObjectDiscount.SelectedValue == 2) id_ReclamaPlace = (int)cmbComby.SelectedValue;
+            //int? id_Buildings = null;
+            //if (cmbBuilding.SelectedValue != null) id_Buildings = (int)cmbBuilding.SelectedValue;
 
-            int? id_LandPlot = null;
-            if ((int)cmbObjectDiscount.SelectedValue == 3) id_LandPlot = (int)cmbComby.SelectedValue;
+            //int? id_Floor = null;
+            //if (cmbFloor.SelectedValue != null) id_Floor = (int)cmbFloor.SelectedValue;
 
-            bool isException = chbIsException.Checked;
+            //int? id_Sections = null;
+            //if ((int)cmbObjectDiscount.SelectedValue == 1) id_Sections = (int)cmbComby.SelectedValue;
 
-            task = Config.hCntMain.setDiscountObject(id_DiscountObject, id, id_ObjectLease, id_Buildings, id_Floor, id_Sections, id_LandPlot, id_ReclamaPlace, isException, true, false, 0);
+            //int? id_ReclamaPlace = null;
+            //if ((int)cmbObjectDiscount.SelectedValue == 2) id_ReclamaPlace = (int)cmbComby.SelectedValue;
+
+            //int? id_LandPlot = null;
+            // if ((int)cmbObjectDiscount.SelectedValue == 3) id_LandPlot = (int)cmbComby.SelectedValue;
+
+            //bool isException = chbIsException.Checked;
+
+            task = Config.hCntMain.setDiscountObject(0, id, 0, 0, 0, 0, 0, false, true, true, 1);
             task.Wait();
+            dtResult = task.Result;
 
-            if (dtResult == null || dtResult.Rows.Count == 0)
+            //if (dtResult == null || dtResult.Rows.Count == 0)
+            //{
+            //    MessageBox.Show("Не удалось сохранить данные", "Ошибка сохранения", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //    return;
+            //}
+
+            //if ((int)dtResult.Rows[0]["id"] == -9999)
+            //{
+            //    MessageBox.Show("Произошла неведомая хрень.", "Ошибка сохранения", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //    return;
+            //}
+
+
+            EnumerableRowCollection<DataRow> rowCollect = dtData.DefaultView.ToTable().AsEnumerable().Where(r => r.Field<bool>("isSelect"));
+
+            foreach (DataRow row in rowCollect)
             {
-                MessageBox.Show("Не удалось сохранить данные", "Ошибка сохранения", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
+                int id_ObjectLease = (int)row["id_ObjectLease"];
+                int? id_Buildings = null;
+                int? id_Floor = null;
 
-            if ((int)dtResult.Rows[0]["id"] == -9999)
-            {
-                MessageBox.Show("Произошла неведомая хрень.", "Ошибка сохранения", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
+                int id_rentalObject = (int)row["id"]; ;
+                int typeRentalObject = (int)cmbObjectDiscount.SelectedValue;
+                bool isException = (bool)row["isException"];
 
+                if ((int)cmbObjectDiscount.SelectedValue == 1)
+                {
+                    id_Buildings = (int)row["id_Building"];
+                    id_Floor = (int)row["id_Floor"];                    
+                }
+                else if ((int)cmbObjectDiscount.SelectedValue == 2)
+                {
+                    id_Buildings = (int)row["id_Building"];
+                }
+                
+
+                task = Config.hCntMain.setDiscountObject(0, id, id_ObjectLease, id_Buildings, id_Floor, id_rentalObject, typeRentalObject, isException, true, false, 0);
+                task.Wait();
+                dtResult = task.Result;
+
+                if (dtResult == null || dtResult.Rows.Count == 0)
+                {
+                    MessageBox.Show("Не удалось сохранить данные", "Ошибка сохранения", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                if ((int)dtResult.Rows[0]["id"] == -9999)
+                {
+                    MessageBox.Show("Произошла неведомая хрень.", "Ошибка сохранения", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+            }
 
 
             isEditData = false;
@@ -455,23 +515,86 @@ namespace dllArendaDictonary.jDiscount
             lComby.Text = "";
             if (cmbObjectDiscount.SelectedValue == null) return;
 
-
-
+            dgvData.DataSource = null;
+            dtData = null;
             lComby.Text = cmbObjectDiscount.Text;
+            isLoadData = true;
             switch ((int)cmbObjectDiscount.SelectedValue)
             {
-                case 1: getSection(); break;
-                case 2: getPlaceReclame(); break;
-                case 3: getArea(); break;
+                case 1: createColumnsGrid(1); getSection(); break;
+                case 2: createColumnsGrid(2); getPlaceReclame(); break;
+                case 3: createColumnsGrid(3); getArea(); break;
                 default: break;
-            }           
+            }
+            isLoadData = false;
+        }
+
+        private void createColumnsGrid(int typeData)
+        {
+            dgvData.Columns.Clear();
+            if (typeData == 1) {
+                addColumns("cNameBuilding", "nameBuilding", "Здание", false);
+                addColumns("cNameFloor", "nameFloor", "Этаж", false);
+                addColumns("cName", "cName", "Секция", false);
+                addColumns("сTotalArea", "Total_Area", "Площадь", false);
+                addColumns("cIsSelect", "isSelect", "V", true);
+                addColumns("cIsException", "isException", "Искл.", true);
+            }
+            else
+                if (typeData == 2) {
+                addColumns("cNameBuilding", "nameBuild", "Здание", false);
+                addColumns("cNumberPlace", "NumberPlace", "Номер места", false);
+                addColumns("сNameSize", "nameSize", "Размер", false);                
+                addColumns("cIsSelect", "isSelect", "V", true);
+                addColumns("cIsException", "isException", "Искл.", true);
+            }
+            else
+            if (typeData == 3) {                
+                addColumns("сNumberPlot", "NumberPlot", "Номер земельного участка", false);
+                addColumns("cAreaPlot", "AreaPlot", "Площадь", false);
+                addColumns("cIsSelect", "isSelect", "V", true);
+                addColumns("cIsException", "isException", "Искл.", true);
+            }
+        }
+
+        private void addColumns(string name,string dataPropertyName,string headerText, bool isCheckBox)
+        {
+            if (isCheckBox)
+            {
+                DataGridViewCheckBoxColumn col = new DataGridViewCheckBoxColumn();
+                col.Name = name;
+                col.DataPropertyName = dataPropertyName;
+                col.HeaderText = headerText;
+                col.Width = 45;
+                col.SortMode = DataGridViewColumnSortMode.NotSortable;
+                col.AutoSizeMode = DataGridViewAutoSizeColumnMode.None;
+                col.ReadOnly = false;
+                dgvData.Columns.Add(col);
+            }
+            else
+            {
+                DataGridViewTextBoxColumn col = new DataGridViewTextBoxColumn();
+                col.Name = name;
+                col.DataPropertyName = dataPropertyName;
+                col.HeaderText = headerText;
+                col.ReadOnly = true;
+                dgvData.Columns.Add(col);
+            }
         }
 
         private void getSection() {
 
+            lObject.Visible = cmbObject.Visible = true;
+            lBuilding.Visible = cmbBuilding.Visible = true;
+            lFloor.Visible = cmbFloor.Visible = true;
+            dgvData.Visible = true;
+
             if (cmbObject.SelectedValue == null) return;
             if (cmbBuilding.SelectedValue == null) return;
             if (cmbFloor.SelectedValue == null) return;
+
+            cmbBuilding.SelectedIndex = 0;
+            cmbFloor.SelectedIndex = 0;
 
             int id_object = (int)cmbObject.SelectedValue;
             int id_building = (int)cmbBuilding.SelectedValue;
@@ -483,21 +606,36 @@ namespace dllArendaDictonary.jDiscount
             if (task.Result == null || task.Result.Rows.Count == 0) return;
 
             EnumerableRowCollection<DataRow> rowCollect = task.Result.AsEnumerable()
-                .Where(r => r.Field<int>("id_Building") == id_building && r.Field<int>("id_ObjectLease") == id_object && r.Field<int>("id_Floor") == id_floor && r.Field<bool>("isActive"));
+                .Where(r => 
+                (r.Field<int>("id_Building") == id_building || id_building == 0)
+                && r.Field<int>("id_ObjectLease") == id_object 
+                && (r.Field<int>("id_Floor") == id_floor || id_floor == 0)
+                && r.Field<bool>("isActive"));
+            
             if (rowCollect.Count() > 0)
             {
-                cmbComby.DataSource = rowCollect.CopyToDataTable();
-                cmbComby.DisplayMember = "cName";
-                cmbComby.ValueMember= "id";
-                cmbComby.SelectedIndex = -1;
+                dtData = rowCollect.CopyToDataTable();
+                setFilter();
+                dgvData.DataSource = dtData;
+                //cmbComby.DataSource = rowCollect.CopyToDataTable();
+                //cmbComby.DisplayMember = "cName";
+                //cmbComby.ValueMember= "id";
+                //cmbComby.SelectedIndex = -1;
             }
         }
 
         private void getPlaceReclame() {
 
+
+            lObject.Visible = cmbObject.Visible = true;
+            lBuilding.Visible = cmbBuilding.Visible = true;
+            lFloor.Visible = cmbFloor.Visible = false;
+            dgvData.Visible = true;
+
             if (cmbObject.SelectedValue == null) return;
             if (cmbBuilding.SelectedValue == null) return;
-            
+
+            cmbBuilding.SelectedIndex = 0;            
 
             int id_object = (int)cmbObject.SelectedValue;
             int id_building = (int)cmbBuilding.SelectedValue;
@@ -509,17 +647,30 @@ namespace dllArendaDictonary.jDiscount
             if (task.Result == null || task.Result.Rows.Count == 0) return;
 
             EnumerableRowCollection<DataRow> rowCollect = task.Result.AsEnumerable()
-                .Where(r => r.Field<int>("id_Building") == id_building && r.Field<int>("id_ObjectLease") == id_object && r.Field<bool>("isActive"));
+                .Where(r => 
+                (r.Field<int>("id_Building") == id_building || id_building == 0)
+                && r.Field<int>("id_ObjectLease") == id_object 
+                && r.Field<bool>("isActive")
+                );
+
             if (rowCollect.Count() > 0)
             {
-                cmbComby.DataSource = rowCollect.CopyToDataTable();
-                cmbComby.DisplayMember = "NumberPlace";
-                cmbComby.ValueMember = "id";
-                cmbComby.SelectedIndex = -1;
+                dtData = rowCollect.CopyToDataTable();
+                setFilter();
+                dgvData.DataSource = dtData;
+                //cmbComby.DataSource = rowCollect.CopyToDataTable();
+                //cmbComby.DisplayMember = "NumberPlace";
+                //cmbComby.ValueMember = "id";
+                //cmbComby.SelectedIndex = -1;
             }
         }
     
         private void getArea() {
+
+            lObject.Visible = cmbObject.Visible = true;
+            lBuilding.Visible = cmbBuilding.Visible = false;
+            lFloor.Visible = cmbFloor.Visible = false;
+            dgvData.Visible = true;
 
             if (cmbObject.SelectedValue == null) return;            
 
@@ -534,18 +685,24 @@ namespace dllArendaDictonary.jDiscount
 
             EnumerableRowCollection<DataRow> rowCollect = task.Result.AsEnumerable()
                 .Where(r => r.Field<int>("id_ObjectLease") == id_object && r.Field<bool>("isActive"));
+            
 
             if (rowCollect.Count() > 0)
             {
-                cmbComby.DataSource = rowCollect.CopyToDataTable();
-                cmbComby.DisplayMember = "NumberPlot";
-                cmbComby.ValueMember = "id";
-                cmbComby.SelectedIndex = -1;
+                dtData = rowCollect.CopyToDataTable();
+                setFilter();
+                dgvData.DataSource = dtData;
+                //cmbComby.DataSource = rowCollect.CopyToDataTable();
+                //cmbComby.DisplayMember = "NumberPlot";
+                //cmbComby.ValueMember = "id";
+                //cmbComby.SelectedIndex = -1;
             }
+            
         }
 
         private void cmbObjectDiscount_SelectionChangeCommitted(object sender, EventArgs e)
         {
+            cmbObject.SelectedIndex = -1;
             getObjectDicountData();
         }
 
@@ -562,6 +719,98 @@ namespace dllArendaDictonary.jDiscount
             }
             else
                 (sender as TextBox).Text = "0,00";
+        }
+
+        private bool isLoadData = true;
+        private DataTable dtData;
+        private void dgvData_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (isLoadData) return;
+            if (dgvData.Columns[e.ColumnIndex].Name.Equals("cIsSelect"))
+            {
+                DataGridViewCheckBoxCell ch1 = new DataGridViewCheckBoxCell();
+                ch1 = (DataGridViewCheckBoxCell)dgvData.Rows[e.RowIndex].Cells[e.ColumnIndex];
+                if (ch1.Value == null)
+                    ch1.Value = false;
+                switch (ch1.Value.ToString())
+                {
+                    case "True":
+                        ch1.Value = false;
+                        break;
+                    case "False":
+                        ch1.Value = true;
+                        break;
+                }
+
+                //bool isSelect = (bool)dtData.DefaultView[e.RowIndex][e.ColumnIndex];
+                setActiveTransferButton();
+            } else if (dgvData.Columns[e.ColumnIndex].Name.Equals("cIsException"))
+            {
+                DataGridViewCheckBoxCell ch1 = new DataGridViewCheckBoxCell();
+                ch1 = (DataGridViewCheckBoxCell)dgvData.Rows[e.RowIndex].Cells[e.ColumnIndex];
+                if (ch1.Value == null)
+                    ch1.Value = false;
+                switch (ch1.Value.ToString())
+                {
+                    case "True":
+                        ch1.Value = false;
+                        break;
+                    case "False":
+                        ch1.Value = true;
+                        break;
+                }
+            }
+        }
+
+        private void setActiveTransferButton()
+        {
+            if (isLoadData || dtData == null)
+            {
+                cmbObject.Enabled = true;
+                cmbObjectDiscount.Enabled = true;
+                return;
+            }
+
+            dtData.AcceptChanges();
+
+            EnumerableRowCollection<DataRow> rowCollect = dtData.DefaultView.ToTable().AsEnumerable().Where(r => r.Field<bool>("isSelect"));
+            cmbObjectDiscount.Enabled = cmbObject.Enabled= rowCollect.Count() == 0;
+        }
+
+        private void cmbBuilding_SelectionChangeCommitted(object sender, EventArgs e)
+        {
+            setFilter();
+        }
+
+        private void setFilter()
+        {
+            if (cmbObjectDiscount.SelectedValue == null) return;            
+            if (dtData == null || dtData.Rows.Count == 0) return;
+
+            int type = (int)cmbObjectDiscount.SelectedValue;
+            try {
+                string filter = "";
+                if (type == 1) {
+                    if ((int)cmbBuilding.SelectedValue != 0)
+                        filter += $"id_Building = {cmbBuilding.SelectedValue}";
+
+                    if ((int)cmbFloor.SelectedValue != 0)
+                        filter += $"id_Floor = {cmbFloor.SelectedValue}";
+
+                    dtData.DefaultView.RowFilter = filter;
+                }
+                else
+                    if (type == 2) {
+                    if ((int)cmbBuilding.SelectedValue != 0)
+                        filter += $"id_Building = {cmbBuilding.SelectedValue}";
+
+                    dtData.DefaultView.RowFilter = filter;
+                }
+            }
+            catch
+            {
+                dtData.DefaultView.RowFilter = "id = -1";
+            }
         }
     }
 }

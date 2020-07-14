@@ -31,13 +31,13 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tbNumber = new System.Windows.Forms.TextBox();
             this.dgvData = new System.Windows.Forms.DataGridView();
+            this.cName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.chbNotActive = new System.Windows.Forms.CheckBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btAdd = new System.Windows.Forms.Button();
             this.btEdit = new System.Windows.Forms.Button();
             this.btDelete = new System.Windows.Forms.Button();
             this.btClose = new System.Windows.Forms.Button();
-            this.cName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
             this.SuspendLayout();
             // 
@@ -81,6 +81,13 @@
             this.dgvData.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dgvData_RowPostPaint);
             this.dgvData.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.dgvData_RowPrePaint);
             this.dgvData.SelectionChanged += new System.EventHandler(this.dgvData_SelectionChanged);
+            // 
+            // cName
+            // 
+            this.cName.DataPropertyName = "cName";
+            this.cName.HeaderText = "Наименование";
+            this.cName.Name = "cName";
+            this.cName.ReadOnly = true;
             // 
             // chbNotActive
             // 
@@ -148,13 +155,6 @@
             this.btClose.UseVisualStyleBackColor = true;
             this.btClose.Click += new System.EventHandler(this.btClose_Click);
             // 
-            // cName
-            // 
-            this.cName.DataPropertyName = "cName";
-            this.cName.HeaderText = "Наименование";
-            this.cName.Name = "cName";
-            this.cName.ReadOnly = true;
-            // 
             // frmList
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -174,7 +174,7 @@
             this.Name = "frmList";
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Справочник земельных участков";
+            this.Text = "Справочник вида деятельности";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmList_FormClosing);
             this.Load += new System.EventHandler(this.frmList_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).EndInit();

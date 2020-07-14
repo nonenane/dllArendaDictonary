@@ -7,7 +7,7 @@ GO
 -- Create date: 2020-04-25
 -- Description:	ѕолучение списка земельных участков
 -- =============================================
-CREATE PROCEDURE [Arenda].[spg_getLandPlot]		 	
+ALTER PROCEDURE [Arenda].[spg_getLandPlot]		 	
 AS
 BEGIN
 	SET NOCOUNT ON;
@@ -18,7 +18,9 @@ BEGIN
 		r.isActive,
 		r.NumberPlot,
 		r.AreaPlot,
-		o.cName as nameObject			
+		o.cName as nameObject,
+		cast(0 as bit) as isSelect,
+		cast(0 as bit) as isException
 	from 
 		[Arenda].[s_LandPlot] r
 			left join [Arenda].[s_ObjectLease] o on o.id = r.id_ObjectLease

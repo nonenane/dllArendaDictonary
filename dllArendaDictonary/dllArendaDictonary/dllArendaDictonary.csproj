@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{52AF3CAF-66A2-44EC-B7E9-B13F3DE87627}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <OutputType>Library</OutputType>
     <RootNamespace>dllArendaDictonary</RootNamespace>
     <AssemblyName>dllArendaDictonary</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
@@ -30,6 +30,9 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EPPlus">
@@ -90,12 +93,6 @@
     </Compile>
     <Compile Include="dicTypeActivities\frmList.Designer.cs">
       <DependentUpon>frmList.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Form1.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="jDiscount\frmAdd.cs">
       <SubType>Form</SubType>
@@ -173,6 +170,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Trash.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\tick.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

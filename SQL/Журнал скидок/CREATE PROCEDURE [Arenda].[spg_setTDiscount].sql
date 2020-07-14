@@ -7,7 +7,7 @@ GO
 -- Create date: 2020-04-25
 -- Description:	Запись заголовка журнала скидок
 -- =============================================
-CREATE PROCEDURE [Arenda].[spg_setTDiscount]		 
+ALTER PROCEDURE [Arenda].[spg_setTDiscount]		 
 	@id int,
 	@dateStart date,
 	@dateEnd date = null,
@@ -27,11 +27,11 @@ BEGIN TRY
 	IF @isDel = 0
 		BEGIN
 
-			IF EXISTS (select TOP(1) id from [Arenda].[j_tDiscount] where id <>@id and id_TypeDiscount = @id_typeDiscount AND id_TypeTenant = @id_TypeTenant AND id_TypeAgreements = @id_TypeAgreements)
-				BEGIN
-					SELECT -1 as id;
-					return;
-				END
+			--IF EXISTS (select TOP(1) id from [Arenda].[j_tDiscount] where id <>@id and id_TypeDiscount = @id_typeDiscount AND id_TypeTenant = @id_TypeTenant AND id_TypeAgreements = @id_TypeAgreements)
+			--	BEGIN
+			--		SELECT -1 as id;
+			--		return;
+			--	END
 
 			IF @id = 0
 				BEGIN
@@ -79,10 +79,10 @@ BEGIN TRY
 					return;
 				END
 			ELSE
-				BEGIN
-					DELETE FROM [Arenda].[j_tDiscount]  where id = @id
+				BEGIN					
 					DELETE FROM [Arenda].[j_DiscountValue]  where id_tDiscount = @id
 					DELETE FROM [Arenda].[j_DiscountObject]  where id_tDiscount = @id
+					DELETE FROM [Arenda].[j_tDiscount]  where id = @id
 					RETURN
 				END
 		END

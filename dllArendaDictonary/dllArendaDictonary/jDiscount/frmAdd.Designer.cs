@@ -28,6 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.btSave = new System.Windows.Forms.Button();
             this.btClose = new System.Windows.Forms.Button();
             this.lTypeDiscont = new System.Windows.Forms.Label();
@@ -62,14 +65,17 @@
             this.chbIsException = new System.Windows.Forms.CheckBox();
             this.lComby = new System.Windows.Forms.Label();
             this.cmbComby = new System.Windows.Forms.ComboBox();
+            this.dgvData = new System.Windows.Forms.DataGridView();
+            this.cTest = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
             this.SuspendLayout();
             // 
             // btSave
             // 
             this.btSave.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btSave.Image = global::dllArendaDictonary.Properties.Resources.Save;
-            this.btSave.Location = new System.Drawing.Point(468, 390);
+            this.btSave.Location = new System.Drawing.Point(549, 535);
             this.btSave.Name = "btSave";
             this.btSave.Size = new System.Drawing.Size(32, 32);
             this.btSave.TabIndex = 2;
@@ -80,7 +86,7 @@
             // 
             this.btClose.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btClose.Image = global::dllArendaDictonary.Properties.Resources.Exit;
-            this.btClose.Location = new System.Drawing.Point(506, 390);
+            this.btClose.Location = new System.Drawing.Point(587, 535);
             this.btClose.Name = "btClose";
             this.btClose.Size = new System.Drawing.Size(32, 32);
             this.btClose.TabIndex = 3;
@@ -298,63 +304,69 @@
             // 
             this.cmbBuilding.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbBuilding.FormattingEnabled = true;
-            this.cmbBuilding.Location = new System.Drawing.Point(110, 296);
+            this.cmbBuilding.Location = new System.Drawing.Point(282, 303);
             this.cmbBuilding.Name = "cmbBuilding";
-            this.cmbBuilding.Size = new System.Drawing.Size(326, 21);
+            this.cmbBuilding.Size = new System.Drawing.Size(148, 21);
             this.cmbBuilding.TabIndex = 15;
-            this.cmbBuilding.SelectionChangeCommitted += new System.EventHandler(this.cmbObject_SelectionChangeCommitted);
+            this.cmbBuilding.Visible = false;
+            this.cmbBuilding.SelectionChangeCommitted += new System.EventHandler(this.cmbBuilding_SelectionChangeCommitted);
             // 
             // cmbObject
             // 
             this.cmbObject.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbObject.FormattingEnabled = true;
-            this.cmbObject.Location = new System.Drawing.Point(110, 269);
+            this.cmbObject.Location = new System.Drawing.Point(67, 303);
             this.cmbObject.Name = "cmbObject";
-            this.cmbObject.Size = new System.Drawing.Size(326, 21);
+            this.cmbObject.Size = new System.Drawing.Size(148, 21);
             this.cmbObject.TabIndex = 16;
+            this.cmbObject.Visible = false;
             this.cmbObject.SelectionChangeCommitted += new System.EventHandler(this.cmbObject_SelectionChangeCommitted);
             // 
             // lObject
             // 
             this.lObject.AutoSize = true;
-            this.lObject.Location = new System.Drawing.Point(54, 272);
+            this.lObject.Location = new System.Drawing.Point(11, 307);
             this.lObject.Name = "lObject";
             this.lObject.Size = new System.Drawing.Size(45, 13);
             this.lObject.TabIndex = 13;
             this.lObject.Text = "Объект";
+            this.lObject.Visible = false;
             // 
             // lBuilding
             // 
             this.lBuilding.AutoSize = true;
-            this.lBuilding.Location = new System.Drawing.Point(55, 299);
+            this.lBuilding.Location = new System.Drawing.Point(227, 307);
             this.lBuilding.Name = "lBuilding";
             this.lBuilding.Size = new System.Drawing.Size(44, 13);
             this.lBuilding.TabIndex = 14;
             this.lBuilding.Text = "Здание";
+            this.lBuilding.Visible = false;
             // 
             // lFloor
             // 
             this.lFloor.AutoSize = true;
-            this.lFloor.Location = new System.Drawing.Point(66, 326);
+            this.lFloor.Location = new System.Drawing.Point(437, 307);
             this.lFloor.Name = "lFloor";
             this.lFloor.Size = new System.Drawing.Size(33, 13);
             this.lFloor.TabIndex = 14;
             this.lFloor.Text = "Этаж";
+            this.lFloor.Visible = false;
             // 
             // cmbFloor
             // 
             this.cmbFloor.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbFloor.FormattingEnabled = true;
-            this.cmbFloor.Location = new System.Drawing.Point(110, 323);
+            this.cmbFloor.Location = new System.Drawing.Point(476, 303);
             this.cmbFloor.Name = "cmbFloor";
-            this.cmbFloor.Size = new System.Drawing.Size(326, 21);
+            this.cmbFloor.Size = new System.Drawing.Size(148, 21);
             this.cmbFloor.TabIndex = 15;
-            this.cmbFloor.SelectionChangeCommitted += new System.EventHandler(this.cmbObject_SelectionChangeCommitted);
+            this.cmbFloor.Visible = false;
+            this.cmbFloor.SelectionChangeCommitted += new System.EventHandler(this.cmbBuilding_SelectionChangeCommitted);
             // 
             // lObjectDiscount
             // 
             this.lObjectDiscount.AutoSize = true;
-            this.lObjectDiscount.Location = new System.Drawing.Point(15, 353);
+            this.lObjectDiscount.Location = new System.Drawing.Point(15, 279);
             this.lObjectDiscount.Name = "lObjectDiscount";
             this.lObjectDiscount.Size = new System.Drawing.Size(84, 13);
             this.lObjectDiscount.TabIndex = 14;
@@ -364,46 +376,100 @@
             // 
             this.cmbObjectDiscount.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbObjectDiscount.FormattingEnabled = true;
-            this.cmbObjectDiscount.Location = new System.Drawing.Point(110, 350);
+            this.cmbObjectDiscount.Location = new System.Drawing.Point(110, 276);
             this.cmbObjectDiscount.Name = "cmbObjectDiscount";
-            this.cmbObjectDiscount.Size = new System.Drawing.Size(326, 21);
+            this.cmbObjectDiscount.Size = new System.Drawing.Size(148, 21);
             this.cmbObjectDiscount.TabIndex = 15;
             this.cmbObjectDiscount.SelectionChangeCommitted += new System.EventHandler(this.cmbObjectDiscount_SelectionChangeCommitted);
             // 
             // chbIsException
             // 
             this.chbIsException.AutoSize = true;
-            this.chbIsException.Location = new System.Drawing.Point(177, 404);
+            this.chbIsException.Location = new System.Drawing.Point(203, 544);
             this.chbIsException.Name = "chbIsException";
             this.chbIsException.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.chbIsException.Size = new System.Drawing.Size(259, 17);
             this.chbIsException.TabIndex = 17;
             this.chbIsException.Text = "Включения объекта в скидку или исключения";
             this.chbIsException.UseVisualStyleBackColor = true;
+            this.chbIsException.Visible = false;
             // 
             // lComby
             // 
-            this.lComby.Location = new System.Drawing.Point(12, 380);
+            this.lComby.Location = new System.Drawing.Point(6, 545);
             this.lComby.Name = "lComby";
             this.lComby.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.lComby.Size = new System.Drawing.Size(109, 18);
             this.lComby.TabIndex = 14;
             this.lComby.Text = ".";
+            this.lComby.Visible = false;
             // 
             // cmbComby
             // 
             this.cmbComby.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbComby.FormattingEnabled = true;
-            this.cmbComby.Location = new System.Drawing.Point(127, 377);
+            this.cmbComby.Location = new System.Drawing.Point(121, 542);
             this.cmbComby.Name = "cmbComby";
-            this.cmbComby.Size = new System.Drawing.Size(309, 21);
+            this.cmbComby.Size = new System.Drawing.Size(76, 21);
             this.cmbComby.TabIndex = 15;
+            this.cmbComby.Visible = false;
+            // 
+            // dgvData
+            // 
+            this.dgvData.AllowUserToAddRows = false;
+            this.dgvData.AllowUserToDeleteRows = false;
+            this.dgvData.AllowUserToResizeRows = false;
+            this.dgvData.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgvData.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvData.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            this.dgvData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvData.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.cTest});
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgvData.DefaultCellStyle = dataGridViewCellStyle2;
+            this.dgvData.Location = new System.Drawing.Point(12, 330);
+            this.dgvData.MultiSelect = false;
+            this.dgvData.Name = "dgvData";
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvData.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            this.dgvData.RowHeadersVisible = false;
+            this.dgvData.Size = new System.Drawing.Size(612, 199);
+            this.dgvData.TabIndex = 18;
+            this.dgvData.Visible = false;
+            this.dgvData.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvData_CellContentClick);
+            // 
+            // cTest
+            // 
+            this.cTest.HeaderText = "test";
+            this.cTest.Name = "cTest";
             // 
             // frmAdd
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(550, 434);
+            this.ClientSize = new System.Drawing.Size(631, 579);
+            this.Controls.Add(this.dgvData);
             this.Controls.Add(this.chbIsException);
             this.Controls.Add(this.cmbComby);
             this.Controls.Add(this.cmbObjectDiscount);
@@ -447,6 +513,7 @@
             this.Load += new System.EventHandler(this.frmAdd_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvData)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -488,5 +555,7 @@
         private System.Windows.Forms.CheckBox chbIsException;
         private System.Windows.Forms.Label lComby;
         private System.Windows.Forms.ComboBox cmbComby;
+        private System.Windows.Forms.DataGridView dgvData;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cTest;
     }
 }

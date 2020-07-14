@@ -20,7 +20,7 @@ CREATE TABLE [Arenda].[j_AdditionalAgreements](
 	[id] [int] IDENTITY(1,1) NOT NULL,
 	[id_Agreements]			int				not null,
 	[RentalVacation]		int				not null default 0 ,
-	[id_SavePayment]		int				not null default 1,
+	[id_SavePayment]		int				null,
 	[id_Editor]				int				null,
 	[DateEdit]				datetime		null,
  CONSTRAINT [PK_j_AdditionalAgreements] PRIMARY KEY CLUSTERED 
@@ -33,8 +33,8 @@ GO
 ALTER TABLE [Arenda].[j_AdditionalAgreements] ADD CONSTRAINT FK_j_AdditionalAgreements_id_Editor FOREIGN KEY (id_Editor)  REFERENCES [dbo].[ListUsers] (id)
 GO
 
-ALTER TABLE [Arenda].[j_AdditionalAgreements] ADD CONSTRAINT FK_j_AdditionalAgreements_id_SavePayment FOREIGN KEY (id_SavePayment)  REFERENCES [Arenda].[s_SavePayment] (id)
-GO
+--ALTER TABLE [Arenda].[j_AdditionalAgreements] ADD CONSTRAINT FK_j_AdditionalAgreements_id_SavePayment FOREIGN KEY (id_SavePayment)  REFERENCES [Arenda].[s_SavePayment] (id)
+--GO
 
 ALTER TABLE [Arenda].[j_AdditionalAgreements] ADD CONSTRAINT FK_j_AdditionalAgreements_id_Agreements FOREIGN KEY (id_Agreements)  REFERENCES [Arenda].[j_Agreements] (id)
 GO
@@ -45,7 +45,7 @@ CREATE TABLE [Arenda].[j_SealSections](
 	[id] [int] IDENTITY(1,1) NOT NULL,
 	[id_Agreements]			int				not null,
 	[DateSeal]				date			not null,
-	[DateOpen]				date			not null,
+	[DateOpen]				date			null,
 	[id_Editor]				int				null,
 	[DateEdit]				datetime		null,
  CONSTRAINT [PK_j_SealSections] PRIMARY KEY CLUSTERED 
@@ -251,9 +251,11 @@ CREATE TABLE [Arenda].[j_DiscountObject](
 	[id_ObjectLease]		int				not null,
 	[id_Buildings]			int				null,
 	[id_Floor]				int				null,
-	[id_Sections]			int				null,
-	[id_LandPlot]			int				null,
-	[id_ReclamaPlace]		int				null,
+	[id_rentalObject]		int				not null,
+	[typeRentalObject]		int				not null,
+	--[id_Sections]			int				null,
+	--[id_LandPlot]			int				null,
+	--[id_ReclamaPlace]		int				null,
 	[isException]			bit				not null default 1,
 	[id_Editor]				int				null,
 	[DateEdit]				datetime		null,

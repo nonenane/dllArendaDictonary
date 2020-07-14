@@ -7,15 +7,17 @@ GO
 -- Create date: 2020-04-25
 -- Description:	Запись журнала объекта скидки 
 -- =============================================
-CREATE PROCEDURE [Arenda].[spg_setDiscountObject]		 
+ALTER PROCEDURE [Arenda].[spg_setDiscountObject]		 
 	@id int,
 	@id_tDiscount int,
 	@id_ObjectLease int,
 	@id_Buildings int = null,
 	@id_Floor int = null,
-	@id_Sections int = null,
-	@id_LandPlot int = null,
-	@id_ReclamaPlace int = null,
+	@id_rentalObject int,
+	@typeRentalObject int,
+	--@id_Sections int = null,
+	--@id_LandPlot int = null,
+	--@id_ReclamaPlace int = null,
 	@isException bit,
 	@isActive bit,
 	@id_user int,
@@ -37,8 +39,10 @@ BEGIN TRY
 
 			IF @id = 0
 				BEGIN
-					INSERT INTO [Arenda].[j_DiscountObject]  (id_tDiscount,id_ObjectLease,id_Buildings,id_Floor,id_Sections,id_LandPlot,id_ReclamaPlace,isException,id_Editor,DateEdit)
-					VALUES (@id_tDiscount,@id_ObjectLease,@id_Buildings,@id_Floor,@id_Sections,@id_LandPlot,@id_ReclamaPlace,@isException,@id_user,GETDATE())
+					--INSERT INTO [Arenda].[j_DiscountObject]  (id_tDiscount,id_ObjectLease,id_Buildings,id_Floor,id_Sections,id_LandPlot,id_ReclamaPlace,isException,id_Editor,DateEdit)
+					--VALUES (@id_tDiscount,@id_ObjectLease,@id_Buildings,@id_Floor,@id_Sections,@id_LandPlot,@id_ReclamaPlace,@isException,@id_user,GETDATE())
+					INSERT INTO [Arenda].[j_DiscountObject]  (id_tDiscount,id_ObjectLease,id_Buildings,id_Floor,id_rentalObject,typeRentalObject,isException,id_Editor,DateEdit)
+					VALUES (@id_tDiscount,@id_ObjectLease,@id_Buildings,@id_Floor,@id_rentalObject,@typeRentalObject,@isException,@id_user,GETDATE())
 
 					SELECT  cast(SCOPE_IDENTITY() as int) as id
 					return;
@@ -49,9 +53,11 @@ BEGIN TRY
 					set		id_ObjectLease = @id_ObjectLease,
 							id_Buildings = @id_Buildings,
 							id_Floor = @id_Floor,
-							id_Sections=@id_Sections,
-							id_LandPlot=@id_LandPlot,
-							id_ReclamaPlace = @id_ReclamaPlace,
+							id_rentalObject= @id_rentalObject,
+							typeRentalObject=@typeRentalObject,
+							--id_Sections=@id_Sections,
+							--id_LandPlot=@id_LandPlot,
+							--id_ReclamaPlace = @id_ReclamaPlace,
 							isException = @isException,
 							id_Editor=@id_user,
 							DateEdit=GETDATE()
@@ -66,7 +72,7 @@ BEGIN TRY
 			IF @result = 0
 				BEGIN
 					
-					IF NOT EXISTS(select TOP(1) id from [Arenda].[j_DiscountObject]  where id = @id and id_tDiscount = @id_tDiscount)
+					IF NOT EXISTS(select TOP(1) id from [Arenda].[j_DiscountObject]  where (@id = 0 or id = @id) and id_tDiscount = @id_tDiscount)
 						BEGIN
 							select -1 as id
 							return;
@@ -84,7 +90,7 @@ BEGIN TRY
 			ELSE
 				BEGIN
 					--DELETE FROM [Arenda].[j_DiscountValue]  where id = @id and id_tDiscount = @id_tDiscount
-					DELETE FROM [Arenda].[j_DiscountObject]  where  id = @id and id_tDiscount = @id_tDiscount
+					DELETE FROM [Arenda].[j_DiscountObject]  where  (@id = 0 OR id = @id) and id_tDiscount = @id_tDiscount
 					RETURN
 				END
 		END
