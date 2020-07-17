@@ -205,12 +205,19 @@ namespace dllArendaDictonary.jDiscount
                 btDelete.Enabled = false;
                 btEdit.Enabled = false;
                 btConfirmD.Enabled = false;
+                tbDiscountPrice.Text = tbPercentDiscount.Text = tbPrice.Text = tbTotalPrice.Text = "";
                 return;
             }
 
             btDelete.Enabled = (int)dtData.DefaultView[dgvData.CurrentRow.Index]["id_StatusDiscount"] == 1;
             btEdit.Enabled = (int)dtData.DefaultView[dgvData.CurrentRow.Index]["id_StatusDiscount"] == 1;
             btConfirmD.Enabled = (int)dtData.DefaultView[dgvData.CurrentRow.Index]["id_StatusDiscount"] == 1;
+
+            tbDiscountPrice.Text = dtData.DefaultView[dgvData.CurrentRow.Index]["DiscountPrice"].ToString();
+            tbPercentDiscount.Text = dtData.DefaultView[dgvData.CurrentRow.Index]["PercentDiscount"].ToString(); 
+            tbPrice.Text = dtData.DefaultView[dgvData.CurrentRow.Index]["Price"].ToString(); 
+            tbTotalPrice.Text = dtData.DefaultView[dgvData.CurrentRow.Index]["TotalPrice"].ToString();
+
         }
 
         private void dgvData_RowPostPaint(object sender, DataGridViewRowPostPaintEventArgs e)
@@ -333,6 +340,7 @@ namespace dllArendaDictonary.jDiscount
                 int id_TypeTenant = (int)dtData.DefaultView[dgvData.CurrentRow.Index]["id_TypeTenant"];
                 int id_StatusDiscount = 2;
 
+                if (DialogResult.No == MessageBox.Show("Подтвердить скидку?", "Подтверждение скидки", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2)) return;                        
 
                 Task<DataTable> task = Config.hCntMain.setTDiscount(id, dateStart, dateEnd, id_TypeDiscount, id_TypeTenant, id_TypeAgreements, id_StatusDiscount, true, false, 0);
                 task.Wait();

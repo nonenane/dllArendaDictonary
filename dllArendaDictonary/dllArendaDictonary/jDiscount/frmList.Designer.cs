@@ -28,11 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tbNumber = new System.Windows.Forms.TextBox();
             this.dgvData = new System.Windows.Forms.DataGridView();
-            this.cDateStart = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.cDateEnd = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.chbNotActive = new System.Windows.Forms.CheckBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.btAdd = new System.Windows.Forms.Button();
@@ -42,6 +40,20 @@
             this.btConfirmD = new System.Windows.Forms.Button();
             this.pConfirmD = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
+            this.tbTotalPrice = new System.Windows.Forms.TextBox();
+            this.lTotalPrice = new System.Windows.Forms.Label();
+            this.tbPrice = new System.Windows.Forms.TextBox();
+            this.lPrice = new System.Windows.Forms.Label();
+            this.tbDiscountPrice = new System.Windows.Forms.TextBox();
+            this.lDiscountPrice = new System.Windows.Forms.Label();
+            this.tbPercentDiscount = new System.Windows.Forms.TextBox();
+            this.lPercentDiscount = new System.Windows.Forms.Label();
+            this.cDateStart = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cDateEnd = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cTypeDiscount = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cTypeLand = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cTypeAgreement = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.cObject = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvData)).BeginInit();
             this.SuspendLayout();
             // 
@@ -51,6 +63,7 @@
             this.tbNumber.Name = "tbNumber";
             this.tbNumber.Size = new System.Drawing.Size(244, 20);
             this.tbNumber.TabIndex = 0;
+            this.tbNumber.Visible = false;
             this.tbNumber.TextChanged += new System.EventHandler(this.tbName_TextChanged);
             // 
             // dgvData
@@ -62,44 +75,34 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvData.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvData.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvData.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dgvData.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvData.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.cDateStart,
-            this.cDateEnd});
+            this.cDateEnd,
+            this.cTypeDiscount,
+            this.cTypeLand,
+            this.cTypeAgreement,
+            this.cObject});
             this.dgvData.Location = new System.Drawing.Point(12, 38);
             this.dgvData.MultiSelect = false;
             this.dgvData.Name = "dgvData";
             this.dgvData.ReadOnly = true;
             this.dgvData.RowHeadersVisible = false;
             this.dgvData.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvData.Size = new System.Drawing.Size(836, 411);
+            this.dgvData.Size = new System.Drawing.Size(836, 320);
             this.dgvData.TabIndex = 1;
             this.dgvData.ColumnWidthChanged += new System.Windows.Forms.DataGridViewColumnEventHandler(this.dgvData_ColumnWidthChanged);
             this.dgvData.RowPostPaint += new System.Windows.Forms.DataGridViewRowPostPaintEventHandler(this.dgvData_RowPostPaint);
             this.dgvData.RowPrePaint += new System.Windows.Forms.DataGridViewRowPrePaintEventHandler(this.dgvData_RowPrePaint);
             this.dgvData.SelectionChanged += new System.EventHandler(this.dgvData_SelectionChanged);
-            // 
-            // cDateStart
-            // 
-            this.cDateStart.DataPropertyName = "DateStart";
-            this.cDateStart.HeaderText = "Начальная дата";
-            this.cDateStart.Name = "cDateStart";
-            this.cDateStart.ReadOnly = true;
-            // 
-            // cDateEnd
-            // 
-            this.cDateEnd.DataPropertyName = "DateEnd";
-            this.cDateEnd.HeaderText = "Конечная дата";
-            this.cDateEnd.Name = "cDateEnd";
-            this.cDateEnd.ReadOnly = true;
             // 
             // chbNotActive
             // 
@@ -199,11 +202,141 @@
             this.label1.TabIndex = 6;
             this.label1.Text = "Подтвержденно Д";
             // 
+            // tbTotalPrice
+            // 
+            this.tbTotalPrice.Location = new System.Drawing.Point(411, 442);
+            this.tbTotalPrice.MaxLength = 15;
+            this.tbTotalPrice.Name = "tbTotalPrice";
+            this.tbTotalPrice.ReadOnly = true;
+            this.tbTotalPrice.Size = new System.Drawing.Size(119, 20);
+            this.tbTotalPrice.TabIndex = 17;
+            this.tbTotalPrice.Text = "0,00";
+            this.tbTotalPrice.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // lTotalPrice
+            // 
+            this.lTotalPrice.AutoSize = true;
+            this.lTotalPrice.Location = new System.Drawing.Point(12, 446);
+            this.lTotalPrice.Name = "lTotalPrice";
+            this.lTotalPrice.Size = new System.Drawing.Size(394, 13);
+            this.lTotalPrice.TabIndex = 13;
+            this.lTotalPrice.Text = "Общая Стоимость по договору, при которой договора попадают под скидки";
+            // 
+            // tbPrice
+            // 
+            this.tbPrice.Location = new System.Drawing.Point(411, 416);
+            this.tbPrice.MaxLength = 15;
+            this.tbPrice.Name = "tbPrice";
+            this.tbPrice.ReadOnly = true;
+            this.tbPrice.Size = new System.Drawing.Size(119, 20);
+            this.tbPrice.TabIndex = 18;
+            this.tbPrice.Text = "0,00";
+            this.tbPrice.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // lPrice
+            // 
+            this.lPrice.AutoSize = true;
+            this.lPrice.Location = new System.Drawing.Point(12, 420);
+            this.lPrice.Name = "lPrice";
+            this.lPrice.Size = new System.Drawing.Size(373, 13);
+            this.lPrice.TabIndex = 14;
+            this.lPrice.Text = "Цена 1 квадратного метра, при которой договора попадают под скидки";
+            // 
+            // tbDiscountPrice
+            // 
+            this.tbDiscountPrice.Location = new System.Drawing.Point(411, 390);
+            this.tbDiscountPrice.MaxLength = 15;
+            this.tbDiscountPrice.Name = "tbDiscountPrice";
+            this.tbDiscountPrice.ReadOnly = true;
+            this.tbDiscountPrice.Size = new System.Drawing.Size(119, 20);
+            this.tbDiscountPrice.TabIndex = 19;
+            this.tbDiscountPrice.Text = "0,00";
+            this.tbDiscountPrice.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // lDiscountPrice
+            // 
+            this.lDiscountPrice.AutoSize = true;
+            this.lDiscountPrice.Location = new System.Drawing.Point(12, 394);
+            this.lDiscountPrice.Name = "lDiscountPrice";
+            this.lDiscountPrice.Size = new System.Drawing.Size(227, 13);
+            this.lDiscountPrice.TabIndex = 15;
+            this.lDiscountPrice.Text = "Новая цена стоимости 1 квадратного мета";
+            // 
+            // tbPercentDiscount
+            // 
+            this.tbPercentDiscount.Location = new System.Drawing.Point(411, 364);
+            this.tbPercentDiscount.MaxLength = 15;
+            this.tbPercentDiscount.Name = "tbPercentDiscount";
+            this.tbPercentDiscount.ReadOnly = true;
+            this.tbPercentDiscount.Size = new System.Drawing.Size(119, 20);
+            this.tbPercentDiscount.TabIndex = 20;
+            this.tbPercentDiscount.Text = "0,00";
+            this.tbPercentDiscount.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            // 
+            // lPercentDiscount
+            // 
+            this.lPercentDiscount.AutoSize = true;
+            this.lPercentDiscount.Location = new System.Drawing.Point(12, 368);
+            this.lPercentDiscount.Name = "lPercentDiscount";
+            this.lPercentDiscount.Size = new System.Drawing.Size(246, 13);
+            this.lPercentDiscount.TabIndex = 16;
+            this.lPercentDiscount.Text = "Процент скидки от общей стоимости договора";
+            // 
+            // cDateStart
+            // 
+            this.cDateStart.DataPropertyName = "DateStart";
+            this.cDateStart.HeaderText = "Начало";
+            this.cDateStart.Name = "cDateStart";
+            this.cDateStart.ReadOnly = true;
+            // 
+            // cDateEnd
+            // 
+            this.cDateEnd.DataPropertyName = "DateEnd";
+            this.cDateEnd.HeaderText = "Конец";
+            this.cDateEnd.Name = "cDateEnd";
+            this.cDateEnd.ReadOnly = true;
+            // 
+            // cTypeDiscount
+            // 
+            this.cTypeDiscount.DataPropertyName = "nameTypeDiscount";
+            this.cTypeDiscount.HeaderText = "Тип скидки";
+            this.cTypeDiscount.Name = "cTypeDiscount";
+            this.cTypeDiscount.ReadOnly = true;
+            // 
+            // cTypeLand
+            // 
+            this.cTypeLand.DataPropertyName = "nameTypeTenant";
+            this.cTypeLand.HeaderText = "Тип Арендатора";
+            this.cTypeLand.Name = "cTypeLand";
+            this.cTypeLand.ReadOnly = true;
+            // 
+            // cTypeAgreement
+            // 
+            this.cTypeAgreement.DataPropertyName = "nameTypeAgreements";
+            this.cTypeAgreement.HeaderText = "Тип договора";
+            this.cTypeAgreement.Name = "cTypeAgreement";
+            this.cTypeAgreement.ReadOnly = true;
+            // 
+            // cObject
+            // 
+            this.cObject.HeaderText = "Объект";
+            this.cObject.Name = "cObject";
+            this.cObject.ReadOnly = true;
+            this.cObject.Visible = false;
+            // 
             // frmList
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(860, 506);
+            this.Controls.Add(this.tbTotalPrice);
+            this.Controls.Add(this.lTotalPrice);
+            this.Controls.Add(this.tbPrice);
+            this.Controls.Add(this.lPrice);
+            this.Controls.Add(this.tbDiscountPrice);
+            this.Controls.Add(this.lDiscountPrice);
+            this.Controls.Add(this.tbPercentDiscount);
+            this.Controls.Add(this.lPercentDiscount);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btConfirmD);
             this.Controls.Add(this.btAdd);
@@ -240,10 +373,22 @@
         private System.Windows.Forms.Button btDelete;
         private System.Windows.Forms.Button btEdit;
         private System.Windows.Forms.Button btAdd;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cDateStart;
-        private System.Windows.Forms.DataGridViewTextBoxColumn cDateEnd;
         private System.Windows.Forms.Button btConfirmD;
         private System.Windows.Forms.Panel pConfirmD;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox tbTotalPrice;
+        private System.Windows.Forms.Label lTotalPrice;
+        private System.Windows.Forms.TextBox tbPrice;
+        private System.Windows.Forms.Label lPrice;
+        private System.Windows.Forms.TextBox tbDiscountPrice;
+        private System.Windows.Forms.Label lDiscountPrice;
+        private System.Windows.Forms.TextBox tbPercentDiscount;
+        private System.Windows.Forms.Label lPercentDiscount;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cDateStart;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cDateEnd;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cTypeDiscount;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cTypeLand;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cTypeAgreement;
+        private System.Windows.Forms.DataGridViewTextBoxColumn cObject;
     }
 }
